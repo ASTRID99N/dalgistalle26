@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ice Queen Ring — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;--p3:#EDD5DA;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.92);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover{opacity:1;color:var(--rg)}
+.nav-cart{position:relative;cursor:pointer;background:none;border:none;padding:4px;display:flex;align-items:center;}
+.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s;}
+.nav-cart:hover svg{opacity:1;stroke:var(--rg);}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg);color:var(--pl);font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.cart-badge.show{opacity:1;}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.breadcrumb{padding:1.5rem 6rem;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,17,20,.35);display:flex;gap:.8rem;align-items:center;}
+.breadcrumb a{color:rgba(26,17,20,.35);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--rg);}
+.breadcrumb span{color:var(--rg);}
+.product-main{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;}
+.product-visual{position:relative;background:var(--blush);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:600px;}
+.product-visual.dark{background:var(--deep);}
+.product-visual.alt1{background:var(--p2);}
+.product-visual.alt2{background:var(--p3);}
+.product-visual.alt3{background:var(--pm);}
+.visual-placeholder{font-family:'Pinyon Script',cursive;font-size:clamp(100px,18vw,220px);color:rgba(183,110,121,.15);user-select:none;pointer-events:none;line-height:1;}
+.product-visual.dark .visual-placeholder{color:rgba(249,216,224,.08);}
+.visual-badge{position:absolute;top:2rem;left:2rem;font-size:7px;letter-spacing:.25em;text-transform:uppercase;padding:5px 14px;}
+.badge-last{background:var(--rg);color:var(--pl);}
+.badge-new{background:var(--pl);color:var(--deep);}
+.badge-sold{background:var(--deep);color:var(--pl);}
+.visual-num{position:absolute;bottom:2rem;right:2rem;font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(183,110,121,.12);line-height:1;}
+.product-visual.dark .visual-num{color:rgba(249,216,224,.06);}
+.product-info{padding:5rem 5rem 5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.product-cat{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,64px);font-weight:300;color:var(--deep);line-height:.95;margin-bottom:.8rem;}
+.product-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,1.8vw,20px);font-style:italic;font-weight:300;color:var(--rg);margin-bottom:2rem;}
+.product-divider{width:40px;height:.5px;background:var(--rg);margin-bottom:2rem;}
+.product-price{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,40px);font-weight:300;color:var(--deep);margin-bottom:.5rem;}
+.product-price-sub{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,17,20,.35);margin-bottom:2.5rem;}
+.stock-row{display:flex;align-items:center;gap:.8rem;margin-bottom:2.5rem;}
+.stock-dot{width:7px;height:7px;border-radius:50%;background:var(--rg);}
+.stock-dot.low{background:#E8A87C;}
+.stock-dot.out{background:rgba(26,17,20,.2);}
+.stock-text{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(26,17,20,.5);}
+.product-story{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,1.8vw,22px);font-weight:300;line-height:1.6;color:var(--deep);margin-bottom:1.5rem;}
+.product-story em{font-style:italic;color:var(--rg);}
+.product-body{font-size:11px;line-height:2;letter-spacing:.05em;color:rgba(26,17,20,.55);margin-bottom:2.5rem;max-width:420px;}
+.details{border-top:.5px solid rgba(183,110,121,.15);margin-bottom:2.5rem;}
+.detail-row{border-bottom:.5px solid rgba(183,110,121,.15);padding:.9rem 0;display:flex;justify-content:space-between;align-items:center;}
+.detail-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(26,17,20,.4);}
+.detail-val{font-size:10px;letter-spacing:.08em;color:var(--deep);}
+.product-cta{display:flex;gap:.8rem;flex-direction:column;}
+.btn-add{background:var(--deep);color:var(--pl);border:none;padding:1.1rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;width:100%;}
+.btn-add:hover{background:var(--rg);transform:translateY(-2px)}
+.btn-add.added{background:var(--rg);}
+.btn-add.soldout{background:rgba(26,17,20,.15);color:rgba(26,17,20,.35);pointer-events:none;}
+.btn-wishlist{background:transparent;color:var(--deep);border:.5px solid rgba(183,110,121,.3);padding:.9rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .25s;width:100%;}
+.btn-wishlist:hover{border-color:var(--rg);color:var(--rg);}
+.btn-back{background:transparent;border:none;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,17,20,.3);cursor:pointer;padding:0;margin-top:.5rem;font-family:'Montserrat',sans-serif;transition:color .2s;text-align:left;}
+.btn-back:hover{color:var(--rg);}
+.related{padding:5rem 6rem;background:var(--blush);}
+.related-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem;}
+.related-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,36px);font-weight:300;color:var(--deep);}
+.related-link{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--rg);text-decoration:none;}
+.related-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;}
+.rel-card{cursor:pointer;transition:transform .3s;}
+.rel-card:hover{transform:translateY(-4px)}
+.rel-img{aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-family:'Pinyon Script',cursive;font-size:40px;color:rgba(183,110,121,.2);position:relative;overflow:hidden;}
+.rel-img.a{background:var(--p2);}.rel-img.b{background:var(--pm);}.rel-img.c{background:var(--deep);color:rgba(249,216,224,.1);}.rel-img.d{background:var(--p3);}
+.rel-hover{position:absolute;inset:0;background:rgba(183,110,121,.08);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.rel-card:hover .rel-hover{opacity:1;}
+.rel-hover-text{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--deep);border-bottom:.5px solid var(--rg);padding-bottom:3px;}
+.rel-info{padding:.7rem 0 0;}
+.rel-cat{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--rg);margin-bottom:.2rem;}
+.rel-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--deep);margin-bottom:.2rem;}
+.rel-price{font-size:9px;letter-spacing:.08em;color:var(--rose);}
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+@media(max-width:800px){
+  .product-main{grid-template-columns:1fr;}.product-visual{min-height:380px;}.product-info{padding:3rem 2rem;}
+  .breadcrumb{padding:1.5rem 2rem;}.related{padding:4rem 2rem;}
+  .related-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  footer{padding:2rem;}nav{padding:1rem 1.5rem;}.nav-links{gap:1.2rem;}
+}
+
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html" data-en="Home" data-ko="홈">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리">Our Story</a>
+      <a href="drop.html" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="View cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Sterling silver 925</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span><span>No restock. No apologies.</span><span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Sterling silver 925</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span><span>No restock. No apologies.</span><span class="dot">✦</span>
+  </div>
+</div>
+<div class="breadcrumb">
+  <a href="index.html" data-en="Home" data-ko="홈">Home</a> ›
+  <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a> ›
+  <span id="bc-name">Ice Queen Ring</span>
+</div>
+<div class="product-main">
+  <div class="product-visual dark" id="product-visual">
+    <div class="visual-placeholder" id="product-symbol">◈</div>
+    <div class="visual-badge badge-last" id="product-badge">2 left</div>
+    <div class="visual-num">26</div>
+  </div>
+  <div class="product-info">
+    <p class="product-cat" id="product-cat">Rings</p>
+    <h1 class="product-name" id="product-name">Ice Queen Ring</h1>
+    <p class="product-tagline" id="product-tagline">"Wear it before someone else does."</p>
+    <div class="product-divider"></div>
+    <div class="product-price" id="product-price">₩ 68,000</div>
+    <p class="product-price-sub t-en">Sterling silver 925 · Free shipping in Korea</p><p class="product-price-sub t-ko" style="display:none;font-family:'Noto Serif KR',serif">925 스털링 실버 · 국내 무료 배송</p>
+    <div class="stock-row">
+      <div class="stock-dot low" id="stock-dot"></div>
+      <span class="stock-text" id="stock-text">Only 2 pieces left — no restock</span>
+    </div>
+    <p class="product-story" id="product-story">She doesn't wear jewelry to be noticed. She wears it because <em>she noticed it first.</em> The Ice Queen Ring is for that girl.</p>
+    <p class="product-body" id="product-body">Cold, clean, and impossibly elegant — this ring carries the energy of a girl who made her decision before the drop even opened. Sterling silver 925. Minimal silhouette. Maximum statement. Limited to 26 pieces in this drop. Once they're gone, this design will never be restocked.</p>
+    <div class="details">
+      <div class="detail-row"><span class="detail-label t-en">Material</span><span class="detail-label t-ko" style="display:none">소재</span><span class="detail-val">Sterling Silver 925</span></div>
+      <div class="detail-row"><span class="detail-label t-en">Drop limit</span><span class="detail-label t-ko" style="display:none">드롭 한정</span><span class="detail-val t-en">26 pieces · No restock</span><span class="detail-val t-ko" style="display:none">26개 · 재입고 없음</span></div>
+      <div class="detail-row"><span class="detail-label t-en">Shipping</span><span class="detail-label t-ko" style="display:none">배송</span><span class="detail-val t-en">Korea free · International available</span><span class="detail-val t-ko" style="display:none">국내 무료 · 해외 배송 가능</span></div>
+      <div class="detail-row"><span class="detail-label t-en">Care</span><span class="detail-label t-ko" style="display:none">관리</span><span class="detail-val t-en">Keep dry · Polish with soft cloth</span><span class="detail-val t-ko" style="display:none">건조하게 보관 · 부드러운 천으로 닦기</span></div>
+    </div>
+    <div class="product-cta">
+      <button class="btn-add" id="add-btn" onclick="handleAdd()"><span class="t-en">Add to cart</span><span class="t-ko" style="display:none">장바구니 담기</span></button>
+      <button class="btn-wishlist"><span class="t-en">Save for later</span><span class="t-ko" style="display:none">나중에 보기</span></button>
+      <button class="btn-back" onclick="window.history.back()"><span class="t-en">← Back to collection</span><span class="t-ko" style="display:none">← 컬렉션으로</span></button>
+    </div>
+  </div>
+</div>
+<section class="related">
+  <div class="related-header">
+    <h2 class="related-title t-en">You might also want these.</h2><h2 class="related-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">이것도 마음에 드실 거예요.</h2>
+    <a href="collection.html" data-en="Collection" data-ko="컬렉션" class="related-link">View all →</a>
+  </div>
+  <div class="related-grid">
+    <div class="rel-card" onclick="loadProduct('Pink Throne Ring')"><div class="rel-img a"><div>◇</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat t-en">Rings</p><p class="rel-cat t-ko" style="display:none">반지</p><p class="rel-name">Pink Throne Ring</p><p class="rel-price">₩ 72,000</p></div></div>
+    <div class="rel-card" onclick="loadProduct('First Kiss Necklace')"><div class="rel-img b"><div>◈</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat t-en">Necklaces</p><p class="rel-cat t-ko" style="display:none">목걸이</p><p class="rel-name">First Kiss Necklace</p><p class="rel-price">₩ 88,000</p></div></div>
+    <div class="rel-card" onclick="loadProduct('Regina Hoops')"><div class="rel-img c"><div>◇</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat t-en">Earrings</p><p class="rel-cat t-ko" style="display:none">귀걸이</p><p class="rel-name">Regina Hoops</p><p class="rel-price">₩ 62,000</p></div></div>
+    <div class="rel-card" onclick="loadProduct('Serena Cuff')"><div class="rel-img d"><div>◉</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat t-en">Bracelets</p><p class="rel-cat t-ko" style="display:none">팔찌</p><p class="rel-name">Serena Cuff</p><p class="rel-price">₩ 84,000</p></div></div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links"><a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a><a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a><a href="#">Instagram</a><a href="#">小红书</a></div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.rel-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+const PRODUCTS={
+  'Ice Queen Ring':{cat:'Rings',price:68000,visual:'dark',symbol:'◈',badgeType:'last',badgeText:'2 left',tagline:'"Wear it before someone else does."',story:'She doesn\'t wear jewelry to be noticed. She wears it because <em>she noticed it first.</em>',body:'Cold, clean, and impossibly elegant. Sterling silver 925. Limited to 26. No restock.',stockText:'Only 2 pieces left',stockLevel:'low'},
+  'Pink Throne Ring':{cat:'Rings',price:72000,visual:'alt1',symbol:'◇',badgeType:'new',badgeText:'New',tagline:'"She chose blush on purpose."',story:'Pink isn\'t soft. Pink is a choice — and <em>Dalgi always chooses on purpose.</em>',body:'The Pink Throne Ring sits on your finger like it was made for a queen. Sterling silver 925. Limited to 26.',stockText:'Available — limited to 26',stockLevel:'ok'},
+  'Upper East Ring':{cat:'Rings',price:65000,visual:'alt2',symbol:'◉',badgeType:'sold',badgeText:'Sold out',tagline:'"The one that got away."',story:'She saw it. She wanted it. <em>She waited.</em> Don\'t be her.',body:'Gone. All 26 found their girls. Watch for the next drop.',stockText:'Sold out · Never restocked',stockLevel:'out'},
+  'First Kiss Necklace':{cat:'Necklaces',price:88000,visual:'',symbol:'◈',badgeType:'last',badgeText:'5 left',tagline:'"The necklace she puts on before she walks in."',story:'Every entrance is a statement. <em>This one hangs at your collarbone</em> and speaks first.',body:'Delicate but deliberate. Sterling silver 925. 5 of 26 remaining.',stockText:'Only 5 pieces left',stockLevel:'low'},
+  'Cold Girl Chain':{cat:'Necklaces',price:92000,visual:'dark',symbol:'◇',badgeType:'new',badgeText:'New',tagline:'"Long. Cold. Unforgettable."',story:'Some chains make noise. <em>This one makes a point.</em>',body:'The Cold Girl Chain drapes like it belongs there. Sterling silver 925. Limited to 26.',stockText:'Available — new drop',stockLevel:'ok'},
+  'Strawberry Drop Pendant':{cat:'Necklaces',price:96000,visual:'alt3',symbol:'◉',badgeType:'',badgeText:'',tagline:'"달기. The original."',story:'This one started it all. <em>The strawberry at the center of the DalgiStälle26 universe.</em>',body:'Named for Dalgi herself. Sterling silver 925. Limited to 26.',stockText:'Available — while they last',stockLevel:'ok'},
+  'Pink Throne Bracelet':{cat:'Bracelets',price:72000,visual:'alt1',symbol:'◈',badgeType:'last',badgeText:'3 left',tagline:'"Stacked. Intentional. Hers."',story:'She wears it alone or stacked three deep. <em>Either way it\'s a throne on her wrist.</em>',body:'Sterling silver 925. Only 3 of 26 left.',stockText:'Only 3 pieces left',stockLevel:'low'},
+  'Serena Cuff':{cat:'Bracelets',price:84000,visual:'',symbol:'◇',badgeType:'new',badgeText:'New',tagline:'"Old money energy. New drop."',story:'Serena never had to try. <em>Neither does this cuff.</em>',body:'Wide. Polished. Sterling silver 925. New this drop. Limited to 26.',stockText:'Available — new arrival',stockLevel:'ok'},
+  'Crown Stack Bracelet':{cat:'Bracelets',price:78000,visual:'alt2',symbol:'◉',badgeType:'sold',badgeText:'Sold out',tagline:'"The one Dalgi kept for herself."',story:'All 26 are gone. <em>She was right — they went fast.</em>',body:'Never restocking. Watch for what comes next.',stockText:'Sold out · Never restocked',stockLevel:'out'},
+  'Upper East Earrings':{cat:'Earrings',price:55000,visual:'dark',symbol:'◈',badgeType:'sold',badgeText:'Sold out',tagline:'"She had them first."',story:'The Upper East Earrings are in the archive now. <em>26 girls have them.</em>',body:'Sold out. Gone. Archived.',stockText:'Sold out · Archived',stockLevel:'out'},
+  'Regina Hoops':{cat:'Earrings',price:62000,visual:'alt3',symbol:'◇',badgeType:'new',badgeText:'New',tagline:'"Small. Unbothered. Louder than anything."',story:'Regina never had to raise her voice. <em>Her earrings did it for her.</em>',body:'Clean silver circles. Sterling silver 925. New this drop.',stockText:'Only 4 pieces left',stockLevel:'low'},
+  'Strawberry Studs':{cat:'Earrings',price:58000,visual:'alt1',symbol:'◉',badgeType:'last',badgeText:'4 left',tagline:'"달기\'s signature. Now yours."',story:'The smallest piece. <em>The biggest statement about who you are.</em>',body:'Two tiny strawberries in sterling silver 925. Dalgi\'s signature piece.',stockText:'Only 4 pieces left',stockLevel:'low'},
+};
+function loadProduct(name){
+  const p=PRODUCTS[name]; if(!p) return;
+  const vis=document.getElementById('product-visual');
+  vis.className='product-visual '+(p.visual||'');
+  document.getElementById('product-symbol').textContent=p.symbol;
+  const badge=document.getElementById('product-badge');
+  badge.textContent=p.badgeText;
+  badge.className='visual-badge';
+  if(p.badgeType==='last')badge.classList.add('badge-last');
+  else if(p.badgeType==='new')badge.classList.add('badge-new');
+  else if(p.badgeType==='sold')badge.classList.add('badge-sold');
+  badge.style.display=p.badgeText?'block':'none';
+  document.getElementById('bc-name').textContent=p.cat+' / '+name;
+  document.getElementById('product-cat').textContent=p.cat;
+  document.getElementById('product-name').textContent=name;
+  document.getElementById('product-tagline').textContent=p.tagline;
+  document.getElementById('product-price').textContent='₩ '+p.price.toLocaleString();
+  document.getElementById('product-story').innerHTML=p.story;
+  document.getElementById('product-body').textContent=p.body;
+  const dot=document.getElementById('stock-dot');
+  dot.className='stock-dot'+(p.stockLevel==='low'?' low':p.stockLevel==='out'?' out':'');
+  document.getElementById('stock-text').textContent=p.stockText;
+  const btn=document.getElementById('add-btn');
+  if(p.stockLevel==='out'){btn.textContent='Sold out';btn.className='btn-add soldout';}
+  else{btn.textContent='Add to cart';btn.className='btn-add';btn.onclick=()=>handleAdd(name,p.cat,p.price,p.visual);}
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.title=name+' — DalgiStälle26';
+  history.pushState({},'',`product.html?p=${encodeURIComponent(name)}`);
+}
+function handleAdd(name,cat,price,imgClass){
+  name=name||'Ice Queen Ring';cat=cat||'Rings';price=price||68000;imgClass=imgClass||'dark';
+  const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  if(!cart.find(i=>i.name===name)){cart.push({name,cat,price,imgClass,id:Date.now()});localStorage.setItem('ds26cart',JSON.stringify(cart));}
+  const badge=document.getElementById('nav-badge');badge.textContent=cart.length;badge.classList.add('show');
+  const btn=document.getElementById('add-btn');btn.textContent='Added ✦';btn.classList.add('added');
+  setTimeout(()=>{btn.textContent='Add to cart';btn.classList.remove('added');},1400);
+}
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const pName=params.get('p');
+  if(pName&&PRODUCTS[pName])loadProduct(pName);
+})();
+(function(){
+  const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  const badge=document.getElementById('nav-badge');
+  if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+})();
+
+// ── UNIVERSAL LANGUAGE SWITCHER ──
+const PAGE_TRANSLATIONS = {
+  'about.html': {
+    eyebrows: {
+      'The Mascot · The Muse · The Standard': '마스코트 · 뮤즈 · 기준',
+      'Who She Is': '그녀는 누구인가',
+      'Her Philosophy': '그녀의 철학',
+      'Her DNA': '그녀의 DNA',
+      'Her World': '그녀의 세계',
+      'Her Ritual': '그녀의 의식',
+      'Her Energy': '그녀의 에너지',
+      'Her Many Moods': '그녀의 다양한 감정',
+      'Her Boundaries': '그녀의 경계',
+      'The Mascot': '마스코트',
+    },
+    titles: {
+      'Three sides of the same crown.': '같은 왕관의 세 면.',
+      'Part Regina.': '레지나 반.',
+      'Part Serena.': '세레나 반.',
+      'Entirely herself.': '오롯이 그녀 자신.',
+      'Meet all of Dalgi.': '달기의 모든 면을 만나세요.',
+      'Where Dalgi comes from.': '달기가 온 곳.',
+      'Want it.': '원해.',
+      'Believe it.': '믿어.',
+      'Have it.': '가져.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'collection.html': {
+    eyebrows: {
+      'The Collection · Drop 01': '컬렉션 · 드롭 01',
+      'All': '전체',
+    },
+    titles: {
+      'Wear it like you own the room.': '공간을 지배하듯 착용하세요.',
+      '26 pieces per drop': '드롭당 26개',
+    },
+    badges: {
+      'New': '신상', 'Sold out': '품절', 'left': '개 남음',
+      'Add to cart': '장바구니 담기', 'View piece': '보기',
+    }
+  },
+  'story.html': {
+    eyebrows: {
+      'The Philosophy · The Rules · The Why': '철학 · 규칙 · 이유',
+      'The Philosophy': '철학',
+      'Why Silver': '왜 실버인가',
+      'The Drop Rules': '드롭 규칙',
+    },
+    titles: {
+      'Not a brand. A belief system.': '브랜드가 아닙니다. 신념 체계입니다.',
+      'Three things we will never compromise on.': '절대 타협하지 않는 세 가지.',
+      'Sterling Silver. Nothing Else.': '스털링 실버. 그것뿐.',
+      '26 Pieces. Every Drop.': '매 드롭 26개.',
+      'No Restock. No Exceptions.': '재입고 없음. 예외 없음.',
+      'How every drop works.': '모든 드롭이 작동하는 방식.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'cart.html': {
+    eyebrows: { 'Your selection': '선택 항목' },
+    titles: { 'Cart': '장바구니', 'Order Summary': '주문 요약' },
+    buttons: {
+      'Proceed to checkout →': '결제하기 →',
+      'Continue shopping': '쇼핑 계속하기',
+      'Remove': '삭제',
+      'Shop the collection': '컬렉션 쇼핑',
+    }
+  },
+  'product.html': {
+    badges: {
+      'Add to cart': '장바구니 담기',
+      'Save for later': '나중에 보기',
+      '← Back to collection': '← 컬렉션으로',
+      'View all →': '전체 보기 →',
+      'View piece': '보기',
+      'You might also want these.': '이것도 마음에 드실 거예요.',
+    }
+  }
+};
+
+function applyPageTranslations(isKo) {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const dict = PAGE_TRANSLATIONS[page];
+  if (!dict) return;
+
+  if (dict.eyebrows) {
+    document.querySelectorAll('.section-eyebrow, .page-eyebrow, .hero-eyebrow, .drop-label, .scene-eyebrow, .card-cat, .insp-label, .trait-num').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = isKo ? (dict.eyebrows[orig] || orig) : orig;
+    });
+  }
+
+  if (dict.titles) {
+    document.querySelectorAll('.section-title, .hero-title, .drop-title, .scene-title, .trait-title, .cart-title, .summary-title, .product-name, .product-cat, .empty-title').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.titles[orig]) el.textContent = isKo ? dict.titles[orig] : orig;
+    });
+  }
+
+  if (dict.buttons) {
+    document.querySelectorAll('button, .btn-add, .btn-back, .btn-wishlist, .related-link, .load-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.buttons[orig]) el.textContent = isKo ? dict.buttons[orig] : orig;
+    });
+  }
+
+  if (dict.badges) {
+    document.querySelectorAll('.badge, .card-action, .overlay-text, .p-overlay-text, .stock-text, .filter-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.badges[orig]) el.textContent = isKo ? dict.badges[orig] : orig;
+    });
+  }
+
+  // Filter buttons KO labels
+  if (isKo && page === 'collection.html') {
+    const filterMap = {'All':'전체','Rings':'반지','Necklaces':'목걸이','Bracelets':'팔찌','Earrings':'귀걸이'};
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const orig = btn.dataset.en || btn.textContent.trim();
+      if (!btn.dataset.en) btn.dataset.en = orig;
+      btn.textContent = filterMap[orig] || orig;
+    });
+    // card categories
+    document.querySelectorAll('.card-cat, .p-cat').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = filterMap[orig] || orig;
+    });
+  } else if (!isKo && page === 'collection.html') {
+    document.querySelectorAll('.filter-btn, .card-cat, .p-cat').forEach(el => {
+      if (el.dataset.en) el.textContent = el.dataset.en;
+    });
+  }
+}
+
+// Extend setLang to also apply page translations
+const _origSetLang = typeof setLang === 'function' ? setLang : null;
+function setLang(lang) {
+  const isKo = lang === 'ko';
+  localStorage.setItem('ds26lang', lang);
+  document.body.classList.toggle('ko-mode', isKo);
+  document.documentElement.lang = lang;
+
+  // Toggle t-en/t-ko if they exist on this page
+  document.querySelectorAll('.t-en').forEach(el => el.style.display = isKo ? 'none' : '');
+  document.querySelectorAll('.t-ko').forEach(el => el.style.display = isKo ? '' : 'none');
+
+  // Toggle buttons
+  const be = document.getElementById('btn-en'), bk = document.getElementById('btn-ko');
+  if (be) be.classList.toggle('active', !isKo);
+  if (bk) bk.classList.toggle('active', isKo);
+
+  // Nav link labels
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const k = isKo ? a.dataset.ko : a.dataset.en;
+    if (k) a.textContent = k;
+  });
+
+  // Apply page-specific translations
+  applyPageTranslations(isKo);
+
+  document.title = isKo ? 'DalgiStälle26 · 실버 주얼리' : 'DalgiStälle26';
+}
+
+// Init
+(function(){
+  const l = localStorage.getItem('ds26lang') || 'en';
+  if (l === 'ko') setLang('ko');
+})();
+</script>
+</body>
+</html>

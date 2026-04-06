@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Drop — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;--p3:#EDD5DA;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.92);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--rg)}
+.nav-cart{position:relative;cursor:pointer;background:none;border:none;padding:4px;display:flex;align-items:center;}
+.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;}
+.nav-cart:hover svg{opacity:1;stroke:var(--rg);}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg);color:var(--pl);font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.cart-badge.show{opacity:1;}
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.drop-hero{min-height:70vh;background:var(--deep);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem 4rem;text-align:center;}
+.drop-hero-bg{position:absolute;font-family:'Pinyon Script',cursive;font-size:clamp(140px,26vw,320px);color:rgba(183,110,121,.05);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none;}
+.drop-eyebrow{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--rg);margin-bottom:1.5rem;animation:fadeUp 1s ease both;}
+.drop-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,7vw,88px);font-weight:300;color:var(--pl);line-height:.95;animation:fadeUp 1s .15s ease both;}
+.drop-hero-title em{font-style:italic;color:var(--rg);}
+.drop-hero-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(28px,5vw,64px);}
+.drop-hero-sub{margin-top:1.5rem;font-size:11px;letter-spacing:.18em;color:rgba(249,216,224,.45);animation:fadeUp 1s .3s ease both;}
+.current-drop{background:var(--deep);padding:0 6rem 6rem;}
+.drop-card{background:rgba(183,110,121,.06);border:.5px solid rgba(183,110,121,.2);padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;}
+.drop-card::before{content:'CURRENT DROP';position:absolute;top:1.2rem;left:1.5rem;font-size:8px;letter-spacing:.35em;color:var(--rg);opacity:.6;}
+.drop-visual{aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.drop-visual img{width:100%;height:100%;object-fit:cover;display:block;}
+.drop-visual-fallback{font-family:'Pinyon Script',cursive;font-size:120px;color:rgba(183,110,121,.15);user-select:none;display:none;}
+.drop-visual-num{position:absolute;bottom:1rem;right:1.5rem;font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:rgba(183,110,121,.12);line-height:1;}
+.drop-num-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.drop-name{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,46px);font-weight:300;color:var(--pl);line-height:1;margin-bottom:.8rem;}
+.drop-name.ko{font-family:'Noto Serif KR',serif;font-size:clamp(16px,3vw,34px);}
+.drop-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(12px,1.6vw,17px);font-style:italic;color:rgba(249,216,224,.5);margin-bottom:2rem;line-height:1.5;}
+.countdown-large{display:flex;gap:1.5rem;margin-bottom:2.5rem;}
+.cl-item{display:flex;flex-direction:column;align-items:center;}
+.cl-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,58px);font-weight:300;color:var(--pl);line-height:1;}
+.cl-label{font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:var(--rg);margin-top:.3rem;}
+.cl-sep{font-family:'Cormorant Garamond',serif;font-size:38px;color:rgba(183,110,121,.3);align-self:flex-start;margin-top:8px;}
+.stock-bar-wrap{margin-bottom:2rem;}
+.stock-bar-label{display:flex;justify-content:space-between;margin-bottom:.6rem;}
+.stock-bar-text{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(249,216,224,.4);}
+.stock-bar-count{font-size:9px;color:var(--rg);}
+.stock-bar{height:2px;background:rgba(183,110,121,.15);}
+.stock-bar-fill{height:100%;background:var(--rg);width:0;transition:width 1s ease;}
+.drop-cta-row{display:flex;gap:.8rem;flex-wrap:wrap;}
+.btn-drop{background:var(--rg);color:var(--pl);border:none;padding:.9rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;}
+.btn-drop:hover{background:#9A5A67;transform:translateY(-2px)}
+.btn-drop-ghost{background:transparent;color:rgba(249,216,224,.5);border:.5px solid rgba(183,110,121,.3);padding:.9rem 2rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.btn-drop-ghost:hover{color:var(--pl);border-color:var(--rg);}
+.section-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,42px);font-weight:300;color:var(--deep);line-height:1.1;}
+.section-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(16px,2.8vw,32px);}
+.upcoming-section{background:var(--blush);padding:5rem 6rem;}
+.upcoming-card{margin-top:1.5rem;background:var(--cw);border:.5px solid rgba(183,110,121,.15);padding:2rem 2.5rem;display:grid;grid-template-columns:72px 1fr auto;gap:2rem;align-items:center;opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s,border-color .3s;}
+.upcoming-card.visible{opacity:1;transform:translateY(0)}
+.upcoming-card:hover{border-color:var(--rg);}
+.upcoming-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:rgba(183,110,121,.2);line-height:1;}
+.upcoming-label{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--rg);margin-bottom:.4rem;}
+.upcoming-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--deep);margin-bottom:.3rem;}
+.upcoming-name.ko{font-family:'Noto Serif KR',serif;}
+.upcoming-date{font-size:10px;color:rgba(26,17,20,.4);}
+.upcoming-hint{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--rg);opacity:.6;text-align:right;}
+.waitlist-section{background:var(--deep);padding:5rem 6rem;text-align:center;}
+.waitlist-title{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,44px);font-weight:300;color:var(--pl);margin-bottom:.8rem;}
+.waitlist-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(16px,2.8vw,34px);}
+.waitlist-sub{font-size:11px;letter-spacing:.08em;color:rgba(249,216,224,.4);margin-bottom:2.5rem;}
+.waitlist-form{display:flex;gap:.8rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+.waitlist-input{flex:1;min-width:200px;background:rgba(249,216,224,.06);border:.5px solid rgba(183,110,121,.25);padding:.9rem 1.2rem;font-family:'Montserrat',sans-serif;font-size:11px;color:var(--pl);outline:none;transition:border-color .2s;}
+.waitlist-input::placeholder{color:rgba(249,216,224,.25);}
+.waitlist-input:focus{border-color:var(--rg);}
+.btn-waitlist{background:var(--rg);color:var(--pl);border:none;padding:.9rem 2rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s;}
+.btn-waitlist:hover{background:#9A5A67;}
+.waitlist-note{font-size:9px;color:rgba(249,216,224,.2);margin-top:1.2rem;}
+.past-section{background:var(--cw);padding:5rem 6rem;}
+.past-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:3rem;}
+.past-card{cursor:pointer;opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
+.past-card.visible{opacity:1;transform:translateY(0)}
+.past-card:hover .past-img img{transform:scale(1.03)}
+.past-img{aspect-ratio:1;background:var(--p2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.past-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.past-img.b{background:var(--p3);}
+.past-img.c{background:rgba(183,110,121,.12);}
+.past-symbol{font-family:'Pinyon Script',cursive;font-size:60px;color:rgba(183,110,121,.18);user-select:none;}
+.past-sold-overlay{position:absolute;inset:0;background:rgba(26,17,20,.55);display:flex;align-items:center;justify-content:center;}
+.past-sold-text{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(249,216,224,.5);border:.5px solid rgba(249,216,224,.2);padding:.4rem 1rem;}
+.past-info{padding:1rem 0 0;}
+.past-num{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--rg);margin-bottom:.3rem;}
+.past-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--deep);margin-bottom:.2rem;}
+.past-date{font-size:9px;color:rgba(26,17,20,.35);}
+.past-status{font-size:9px;color:rgba(26,17,20,.3);}
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+@media(max-width:800px){
+  .drop-card{grid-template-columns:1fr;gap:2rem;}
+  .past-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .upcoming-card{grid-template-columns:56px 1fr;}.upcoming-hint{display:none;}
+  .current-drop,.upcoming-section,.waitlist-section,.past-section,footer{padding-left:2rem;padding-right:2rem;}
+  nav{padding:1rem 1.5rem;}.nav-links{gap:1rem;font-size:9px;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리">Our Story</a>
+      <a href="drop.html" class="active" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="Cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span>
+    <span class="t-en">26 pieces. No restock. No apologies.</span><span class="t-ko" style="display:none">26개. 재입고 없음. 사과도 없음.</span>
+    <span class="dot">✦</span>
+    <span class="t-en">Yours or someone else's.</span><span class="t-ko" style="display:none">당신 것이거나, 다른 사람 것이거나.</span>
+    <span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span>
+    <span class="t-en">26 pieces. No restock. No apologies.</span><span class="t-ko" style="display:none">26개. 재입고 없음. 사과도 없음.</span>
+    <span class="dot">✦</span>
+    <span class="t-en">Yours or someone else's.</span><span class="t-ko" style="display:none">당신 것이거나, 다른 사람 것이거나.</span>
+    <span class="dot">✦</span>
+  </div>
+</div>
+<section class="drop-hero">
+  <div class="drop-hero-bg">Drop</div>
+  <p class="drop-eyebrow">The Drop · 드롭</p>
+  <h1 class="drop-hero-title t-en">26 pieces.<br><em>Move or miss.</em></h1>
+  <h1 class="drop-hero-title ko t-ko" style="display:none">26개.<br><em>지금 아니면 없다.</em></h1>
+  <p class="drop-hero-sub t-en">Every drop is limited to 26 pieces. No restock. No exceptions. Ever.</p>
+  <p class="drop-hero-sub t-ko" style="display:none">모든 드롭은 26개로 제한됩니다. 재입고 없음. 예외 없음. 절대.</p>
+</section>
+<div class="current-drop">
+  <div class="drop-card">
+    <div class="drop-visual">
+      <img src="images/product-lock-pink-4.png" alt="Lock &amp; Heart Collection" onerror="this.style.display='none';document.querySelector('.drop-visual-fallback').style.display='block'"/>
+      <div class="drop-visual-fallback">◈</div>
+      <div class="drop-visual-num">01</div>
+    </div>
+    <div>
+      <p class="drop-num-label t-en">Drop 01 · Current</p>
+      <p class="drop-num-label t-ko" style="display:none">드롭 01 · 현재 진행 중</p>
+      <h2 class="drop-name t-en">The Lock &amp; Heart Collection</h2>
+      <h2 class="drop-name ko t-ko" style="display:none">자물쇠 &amp; 하트 컬렉션</h2>
+      <p class="drop-tagline t-en">"She locks what's hers. She wears the key."</p>
+      <p class="drop-tagline t-ko" style="display:none">"그녀는 자신의 것을 잠근다. 열쇠를 착용한 채로."</p>
+      <div class="countdown-large">
+        <div class="cl-item"><div class="cl-num" id="dd">00</div><div class="cl-label t-en">Days</div><div class="cl-label t-ko" style="display:none">일</div></div>
+        <div class="cl-sep">·</div>
+        <div class="cl-item"><div class="cl-num" id="dh">00</div><div class="cl-label t-en">Hours</div><div class="cl-label t-ko" style="display:none">시간</div></div>
+        <div class="cl-sep">·</div>
+        <div class="cl-item"><div class="cl-num" id="dm">00</div><div class="cl-label t-en">Min</div><div class="cl-label t-ko" style="display:none">분</div></div>
+        <div class="cl-sep">·</div>
+        <div class="cl-item"><div class="cl-num" id="ds">00</div><div class="cl-label t-en">Sec</div><div class="cl-label t-ko" style="display:none">초</div></div>
+      </div>
+      <div class="stock-bar-wrap">
+        <div class="stock-bar-label">
+          <span class="stock-bar-text t-en">Pieces remaining</span>
+          <span class="stock-bar-text t-ko" style="display:none">남은 수량</span>
+          <span class="stock-bar-count">8 / 26</span>
+        </div>
+        <div class="stock-bar"><div class="stock-bar-fill" id="stock-fill"></div></div>
+      </div>
+      <div class="drop-cta-row">
+        <button class="btn-drop" onclick="window.location.href='collection.html?tab=drop'">
+          <span class="t-en">Shop this drop</span><span class="t-ko" style="display:none">이 드롭 쇼핑하기</span>
+        </button>
+        <button class="btn-drop-ghost" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">
+          <span class="t-en">Notify me next drop</span><span class="t-ko" style="display:none">다음 드롭 알림 받기</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="upcoming-section">
+  <p class="section-eyebrow t-en">Coming Next</p>
+  <p class="section-eyebrow t-ko" style="display:none">다음 드롭</p>
+  <h2 class="section-title t-en">What Dalgi is planning.</h2>
+  <h2 class="section-title ko t-ko" style="display:none">달기가 준비 중인 것.</h2>
+  <div class="upcoming-card">
+    <div class="upcoming-num">02</div>
+    <div>
+      <p class="upcoming-label t-en">Drop 02 · Upcoming</p><p class="upcoming-label t-ko" style="display:none">드롭 02 · 예정</p>
+      <p class="upcoming-name t-en">The Strawberry Season</p><p class="upcoming-name ko t-ko" style="display:none">딸기 시즌</p>
+      <p class="upcoming-date t-en">Coming May 26, 2026 · 20:00 KST</p><p class="upcoming-date t-ko" style="display:none">2026년 5월 26일 · 오후 8시 (KST)</p>
+    </div>
+    <div><p class="upcoming-hint t-en">Join waitlist ↓</p><p class="upcoming-hint t-ko" style="display:none">대기 목록 ↓</p></div>
+  </div>
+  <div class="upcoming-card" style="opacity:.4!important;pointer-events:none">
+    <div class="upcoming-num">03</div>
+    <div>
+      <p class="upcoming-label t-en">Drop 03 · TBA</p><p class="upcoming-label t-ko" style="display:none">드롭 03 · 미정</p>
+      <p class="upcoming-name t-en">???</p>
+      <p class="upcoming-date t-en">Date unknown · Follow for updates</p><p class="upcoming-date t-ko" style="display:none">날짜 미정 · 팔로우해서 업데이트 받기</p>
+    </div>
+    <div><p class="upcoming-hint t-en">Secret ✦</p><p class="upcoming-hint t-ko" style="display:none">비밀 ✦</p></div>
+  </div>
+</section>
+<section class="waitlist-section" id="waitlist">
+  <p class="section-eyebrow" style="color:var(--rg)">Waitlist · 대기 목록</p>
+  <h2 class="waitlist-title t-en">Don't miss the next drop.</h2>
+  <h2 class="waitlist-title ko t-ko" style="display:none">다음 드롭을 놓치지 마세요.</h2>
+  <p class="waitlist-sub t-en">We'll notify you 24 hours before each drop. That's your only warning.</p>
+  <p class="waitlist-sub t-ko" style="display:none">각 드롭 24시간 전에 알림을 보내드립니다. 그게 유일한 경고입니다.</p>
+  <div class="waitlist-form">
+    <input class="waitlist-input t-en" type="email" placeholder="your@email.com" id="waitlist-email"/>
+    <input class="waitlist-input t-ko" type="email" placeholder="이메일 주소" id="waitlist-email-ko" style="display:none"/>
+    <button class="btn-waitlist" onclick="joinWaitlist()">
+      <span class="t-en">Join</span><span class="t-ko" style="display:none">가입하기</span>
+    </button>
+  </div>
+  <p class="waitlist-note t-en">No spam. Only drops. Unsubscribe anytime.</p>
+  <p class="waitlist-note t-ko" style="display:none">스팸 없음. 드롭 알림만. 언제든지 취소 가능.</p>
+</section>
+<section class="past-section">
+  <p class="section-eyebrow t-en">The Archive</p>
+  <p class="section-eyebrow t-ko" style="display:none">아카이브</p>
+  <h2 class="section-title t-en">Every drop that came before.</h2>
+  <h2 class="section-title ko t-ko" style="display:none">지금까지의 모든 드롭.</h2>
+  <div class="past-grid">
+    <div class="past-card">
+      <div class="past-img"><div class="past-symbol">◈</div><div class="past-sold-overlay"><span class="past-sold-text t-en">Sold out</span><span class="past-sold-text t-ko" style="display:none">품절</span></div></div>
+      <div class="past-info">
+        <p class="past-num t-en">Drop 00 · Inaugural</p><p class="past-num t-ko" style="display:none">드롭 00 · 창립 기념</p>
+        <p class="past-name t-en">The Founding Collection</p><p class="past-name t-ko" style="display:none">창립 컬렉션</p>
+        <p class="past-date">Jan 26, 2026</p>
+        <p class="past-status t-en">26 of 26 sold · Never restocked</p><p class="past-status t-ko" style="display:none">26/26 판매 완료 · 재입고 없음</p>
+      </div>
+    </div>
+    <div class="past-card">
+      <div class="past-img b"><div class="past-symbol">◇</div><div class="past-sold-overlay"><span class="past-sold-text t-en">Sold out</span><span class="past-sold-text t-ko" style="display:none">품절</span></div></div>
+      <div class="past-info">
+        <p class="past-num t-en">Drop 00.5 · Pre-launch</p><p class="past-num t-ko" style="display:none">드롭 00.5 · 프리론칭</p>
+        <p class="past-name t-en">The Blush Edit</p><p class="past-name t-ko" style="display:none">블러쉬 에디트</p>
+        <p class="past-date">Feb 14, 2026</p>
+        <p class="past-status t-en">26 of 26 sold · Never restocked</p><p class="past-status t-ko" style="display:none">26/26 판매 완료 · 재입고 없음</p>
+      </div>
+    </div>
+    <div class="past-card" onclick="window.location.href='collection.html?tab=drop'">
+      <div class="past-img c">
+        <img src="images/product-lock-bracelet-1.png" alt="Lock &amp; Heart" onerror="this.style.display='none'"/>
+        <div class="past-sold-overlay" style="background:rgba(183,110,121,.15)">
+          <span class="past-sold-text t-en">8 left → Shop</span><span class="past-sold-text t-ko" style="display:none">8개 남음 → 쇼핑</span>
+        </div>
+      </div>
+      <div class="past-info">
+        <p class="past-num t-en">Drop 01 · Current</p><p class="past-num t-ko" style="display:none">드롭 01 · 현재</p>
+        <p class="past-name t-en">Lock &amp; Heart</p><p class="past-name t-ko" style="display:none">자물쇠 &amp; 하트</p>
+        <p class="past-date">Apr 2026</p>
+        <p class="past-status t-en">8 of 26 remaining</p><p class="past-status t-ko" style="display:none">26개 중 8개 남음</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links">
+    <a href="collection.html" class="t-en">Collection</a><a href="collection.html" class="t-ko" style="display:none">컬렉션</a>
+    <a href="about.html" class="t-en">About Dalgi</a><a href="about.html" class="t-ko" style="display:none">달기 소개</a>
+    <a href="#">Instagram</a><a href="#">小红书</a>
+  </div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.past-card,.upcoming-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+const target=new Date(Date.now()+3*864e5+14*36e5+22*6e4);
+function tick(){
+  const d=target-Date.now();if(d<=0)return;
+  document.getElementById('dd').textContent=String(Math.floor(d/864e5)).padStart(2,'0');
+  document.getElementById('dh').textContent=String(Math.floor(d%864e5/36e5)).padStart(2,'0');
+  document.getElementById('dm').textContent=String(Math.floor(d%36e5/6e4)).padStart(2,'0');
+  document.getElementById('ds').textContent=String(Math.floor(d%6e4/1e3)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+setTimeout(()=>{document.getElementById('stock-fill').style.width='69%';},400);
+function joinWaitlist(){
+  const isKo=localStorage.getItem('ds26lang')==='ko';
+  const email=document.getElementById(isKo?'waitlist-email-ko':'waitlist-email').value;
+  if(!email||!email.includes('@')){alert(isKo?'이메일을 입력해주세요.':'Please enter a valid email.');return;}
+  const w=JSON.parse(localStorage.getItem('ds26waitlist')||'[]');
+  if(!w.includes(email)){w.push(email);localStorage.setItem('ds26waitlist',JSON.stringify(w));}
+  alert(isKo?'등록되었습니다! 다음 드롭 24시간 전에 알림을 보내드립니다 🩷':'You\'re on the list! We\'ll notify you 24hrs before the next drop 🩷');
+  document.getElementById(isKo?'waitlist-email-ko':'waitlist-email').value='';
+}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});},{threshold:0.1});
+document.querySelectorAll('.past-card,.upcoming-card').forEach(el=>obs.observe(el));
+function setLang(lang){
+  const isKo=lang==='ko';
+  localStorage.setItem('ds26lang',lang);
+  document.body.classList.toggle('ko-mode',isKo);
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.t-en').forEach(el=>el.style.display=isKo?'none':'');
+  document.querySelectorAll('.t-ko').forEach(el=>el.style.display=isKo?'':'none');
+  const be=document.getElementById('btn-en'),bk=document.getElementById('btn-ko');
+  if(be)be.classList.toggle('active',!isKo);if(bk)bk.classList.toggle('active',isKo);
+  document.querySelectorAll('.nav-links a').forEach(a=>{const k=isKo?a.dataset.ko:a.dataset.en;if(k)a.textContent=k;});
+  document.title=isKo?'드롭 — DalgiStälle26':'Drop — DalgiStälle26';
+}
+(function(){const l=localStorage.getItem('ds26lang')||'en';if(l==='ko')setLang('ko');})();
+(function(){const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');const badge=document.getElementById('nav-badge');if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}})();
+</script>
+</body>
+</html>

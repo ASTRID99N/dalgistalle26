@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Dalgi — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rosegold:#B76E79;--cold-white:#FDFAF9;--deep:#1A1114;--pink-mid:#EDB8C4;--pink-light:#F9D8E0;}
+html{scroll-behavior:smooth}
+body{background:var(--cold-white);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rosegold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s,background 0.2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rosegold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0.6;transition:width 0.2s,height 0.2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,0.92);backdrop-filter:blur(14px);border-bottom:0.5px solid rgba(183,110,121,0.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rosegold);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:0.5;transition:opacity 0.2s,color 0.2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--rosegold)}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 24s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:0.22em;color:var(--pink-light);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rosegold)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--deep);}
+.hero-text{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center;}
+.hero-img{position:relative;overflow:hidden;}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.hero-eyebrow{font-size:9px;letter-spacing:0.45em;text-transform:uppercase;color:var(--rosegold);margin-bottom:1.5rem;}
+.hero-name{font-family:'Pinyon Script',cursive;font-size:clamp(64px,10vw,130px);color:var(--pink-light);line-height:0.9;margin-bottom:1.2rem;}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,24px);font-style:italic;font-weight:300;color:rgba(249,216,224,0.65);line-height:1.5;max-width:400px;margin-bottom:2.5rem;}
+.hero-tagline em{color:var(--rosegold);}
+.hero-divider{width:40px;height:0.5px;background:var(--rosegold);margin-bottom:2rem;}
+.hero-desc{font-size:11px;line-height:2;letter-spacing:0.06em;color:rgba(249,216,224,0.45);max-width:380px;}
+.hero-img-caption{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(transparent,rgba(26,17,20,0.7));font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(249,216,224,0.6);}
+.scene{display:grid;grid-template-columns:1fr 1fr;min-height:520px;}
+.scene.reverse{direction:rtl;}
+.scene.reverse>*{direction:ltr;}
+.scene-img{position:relative;overflow:hidden;}
+.scene-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease;}
+.scene-img:hover img{transform:scale(1.03)}
+.scene-text{padding:5rem 4.5rem;display:flex;flex-direction:column;justify-content:center;}
+.scene-eyebrow{font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:var(--rosegold);margin-bottom:1rem;}
+.scene-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,44px);font-weight:300;line-height:1.1;margin-bottom:1.5rem;}
+.scene-title em{font-style:italic;color:var(--rosegold);}
+.scene-body{font-size:11px;line-height:2;letter-spacing:0.05em;color:rgba(26,17,20,0.6);max-width:380px;}
+.scene-quote{margin-top:2rem;padding:1.2rem 1.5rem;border-left:2px solid var(--rosegold);font-family:'Cormorant Garamond',serif;font-size:clamp(14px,1.8vw,20px);font-style:italic;color:var(--rosegold);line-height:1.5;}
+.scene.dark{background:var(--deep);}
+.scene.dark .scene-text{background:var(--deep);}
+.scene.dark .scene-title{color:var(--pink-light);}
+.scene.dark .scene-body{color:rgba(249,216,224,0.5);}
+.emotions{background:var(--blush);padding:6rem 4rem;text-align:center;}
+.emotions-header{margin-bottom:3.5rem;}
+.section-eyebrow{font-size:9px;letter-spacing:0.42em;text-transform:uppercase;color:var(--rosegold);margin-bottom:1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,46px);font-weight:300;color:var(--deep);line-height:1.1;}
+.emotions-img-wrap{max-width:820px;margin:0 auto;}
+.emotions-img-wrap img{width:100%;border-radius:4px;box-shadow:0 20px 60px rgba(183,110,121,0.2);}
+.manifesto{background:var(--deep);padding:8rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.manifesto-bg{position:absolute;font-family:'Pinyon Script',cursive;font-size:320px;color:rgba(183,110,121,0.05);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;}
+.manifesto-lines{max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.manifesto-line{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,42px);font-weight:300;line-height:1.3;color:var(--pink-light);margin-bottom:0.6rem;opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.manifesto-line.visible{opacity:1;transform:translateY(0)}
+.manifesto-line em{font-style:italic;color:var(--rosegold);}
+.manifesto-line.big{font-weight:600;font-size:clamp(24px,4.5vw,56px);}
+.manifesto-sig{margin-top:3rem;font-family:'Pinyon Script',cursive;font-size:clamp(36px,6vw,70px);color:var(--rosegold);opacity:0;transition:opacity 1s ease 1.4s;}
+.manifesto-sig.visible{opacity:1;}
+footer{background:var(--deep);border-top:0.5px solid rgba(183,110,121,0.2);padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rosegold);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(249,216,224,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--rosegold)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,0.2);}
+@media(max-width:768px){
+  .hero,.scene{grid-template-columns:1fr;}.scene.reverse{direction:ltr;}
+  .hero-text,.scene-text{padding:3rem 2rem;}.hero-img,.scene-img{min-height:300px;}
+  .emotions{padding:4rem 1.5rem;}.manifesto{padding:5rem 2rem;}
+  footer,nav{padding:1.5rem;}.nav-links{gap:1rem;}
+}
+.nav-right{display:flex;align-items:center;gap:2rem;}.nav-cart{position:relative;cursor:none;background:none;border:none;padding:4px;display:flex;align-items:center;}.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s,stroke .2s;}.nav-cart:hover svg{opacity:1;stroke:var(--rg,var(--rosegold,#B76E79));}.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg,var(--rosegold,#B76E79));color:var(--pl,var(--pink-light,#F9D8E0));font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}.cart-badge.show{opacity:1;}
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html" data-en="Home" data-ko="홈">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개" class="active">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리">Our Story</a>
+      <a href="drop.html" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="View cart">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>She believes. She receives.</span><span class="dot">✦</span><span>Part Regina. Part Serena. Entirely Dalgi.</span><span class="dot">✦</span><span>i don't care — she wears it anyway</span><span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>She believes. She receives.</span><span class="dot">✦</span><span>Part Regina. Part Serena. Entirely Dalgi.</span><span class="dot">✦</span><span>i don't care — she wears it anyway</span><span class="dot">✦</span>
+  </div>
+</div>
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow t-en">The Mascot · The Muse · The Standard</p><p class="hero-eyebrow t-ko" style="display:none">마스코트 · 뮤즈 · 기준</p>
+    <h1 class="hero-name">Dalgi</h1>
+    <p class="hero-tagline">She doesn't chase. She doesn't wait.<br>She decides — and <em>it's already hers.</em></p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">Dalgi is a black cat with a pink crown — and she is the living embodiment of DalgiStälle26. Cold. Glamorous. Unapologetically herself. Every piece of silver she wears, she chose on purpose.</p>
+  </div>
+  <div class="hero-img">
+    <img src="images/Dalgi_20Brand_20Ambassador_20Yacht_20Luxury.png" alt="Dalgi on yacht — i don't care"/>
+    <div class="hero-img-caption">Dalgi · On the yacht · Unbothered</div>
+  </div>
+</section>
+<div class="scene">
+  <div class="scene-img"><img src="images/DalgiSt_C3_A4lle26_20Queen_20Dalgi_20Glamour_20Scene.png" alt="Dalgi penthouse"/></div>
+  <div class="scene-text">
+    <p class="scene-eyebrow t-en">Her World</p><p class="scene-eyebrow t-ko" style="display:none">그녀의 세계</p>
+    <h2 class="scene-title t-en">Penthouse views.<br><em>Popcorn in hand.</em><br>Laptop on pink.</h2><h2 class="scene-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">펜트하우스 뷰.<br><em>팝콘을 손에 들고.</em><br>핑크 노트북.</h2>
+    <p class="scene-body">She doesn't need to go out to be the most glamorous person in the room. Dalgi runs her empire from a glitter-covered laptop on a gold velvet sofa with the New York skyline behind her. That's the energy. That's the standard.</p>
+    <div class="scene-quote">"Busy doesn't look like hustle. It looks like this."</div>
+  </div>
+</div>
+<div class="scene reverse dark">
+  <div class="scene-img"><img src="images/Dalgi_20Brand_20Ambassador_20Luxury_20Bath.png" alt="Dalgi luxury bath"/></div>
+  <div class="scene-text">
+    <p class="scene-eyebrow t-en">Her Ritual</p><p class="scene-eyebrow t-ko" style="display:none">그녀의 의식</p>
+    <h2 class="scene-title t-en">For queens who<br><em>heal, sparkle,</em><br>and slay.</h2><h2 class="scene-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">치유하고, 빛나고,<br><em>압도하는</em> 퀸들을 위해.</h2>
+    <p class="scene-body">Pearls on. Champagne raised. Rose petal bath drawn. This is not self-care — this is Dalgi's Tuesday. She wears her silver even in the bath because why would she take it off? She earned it.</p>
+    <div class="scene-quote">"She didn't get ready. She was always ready."</div>
+  </div>
+</div>
+<div class="scene">
+  <div class="scene-img"><img src="images/Dalgi_20Scene_204_20Magical_20Sparkles.png" alt="Dalgi sparkle paws"/></div>
+  <div class="scene-text">
+    <p class="scene-eyebrow t-en">Her Energy</p><p class="scene-eyebrow t-ko" style="display:none">그녀의 에너지</p>
+    <h2 class="scene-title t-en">Sending you<br><em>paws-itive</em><br>energy.</h2><h2 class="scene-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">긍정적인<br><em>에너지</em>를 전합니다.</h2>
+    <p class="scene-body">Dalgi manifests in sparkles. When she raises her paws, something shifts — the energy in the room, the light on your silver, the way you feel when you put on a DalgiStälle26 piece for the first time. She's rooting for you. She always was.</p>
+    <div class="scene-quote">"She wanted it. She has it. Now so do you."</div>
+  </div>
+</div>
+<section class="emotions">
+  <div class="emotions-header">
+    <p class="section-eyebrow t-en">Her Many Moods</p><p class="section-eyebrow t-ko" style="display:none">그녀의 다양한 감정</p>
+    <h2 class="section-title t-en">Meet all of Dalgi.</h2><h2 class="section-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">달기의 모든 면을 만나세요.</h2>
+  </div>
+  <div class="emotions-img-wrap"><img src="images/dalgi-moods.jpg" alt="Meet Dalgi — all her expressions"/></div>
+</section>
+<div class="scene reverse dark">
+  <div class="scene-img"><img src="images/dalgi-busy.jpg" alt="Dalgi I'm busy"/></div>
+  <div class="scene-text">
+    <p class="scene-eyebrow t-en">Her Boundaries</p><p class="scene-eyebrow t-ko" style="display:none">그녀의 경계</p>
+    <h2 class="scene-title t-en">I'm busy.<br><em>Do not disturb.</em></h2><h2 class="scene-title t-ko" style="display:none;font-family:'Noto Serif KR',serif">바쁩니다.<br><em>방해하지 마세요.</em></h2>
+    <p class="scene-body">Even her unbothered moments are glamorous. Pink glitter blanket, popcorn everywhere, city lights outside, crown still on. Dalgi doesn't take days off from being herself — she just takes them from everyone else.</p>
+    <div class="scene-quote">"Unavailable. Unapologetic. Unforgettable."</div>
+  </div>
+</div>
+<section class="manifesto">
+  <div class="manifesto-bg">Dalgi</div>
+  <div class="manifesto-lines" id="manifesto">
+    <p class="manifesto-line t-en">She walked in and</p><p class="manifesto-line t-ko" style="display:none">그녀가 들어왔을 때</p>
+    <p class="manifesto-line big t-en"><em>the room rearranged itself.</em></p><p class="manifesto-line big t-ko" style="display:none"><em>공간이 스스로 재배열되었다.</em></p>
+    <p class="manifesto-line" style="margin-top:2rem">She didn't ask for a seat.</p>
+    <p class="manifesto-line big t-en"><em>She brought her own throne.</em></p><p class="manifesto-line big t-ko" style="display:none"><em>그녀는 자신의 왕좌를 가져왔다.</em></p>
+    <p class="manifesto-line" style="margin-top:2rem">She didn't want what they had.</p>
+    <p class="manifesto-line big t-en"><em>She wanted what no one else could imagine.</em></p><p class="manifesto-line big t-ko" style="display:none"><em>그녀는 아무도 상상할 수 없는 것을 원했다.</em></p>
+    <p class="manifesto-line" style="margin-top:2.5rem;font-size:clamp(12px,1.8vw,18px);color:var(--rosegold);">She wanted it. She has it.</p>
+    <div class="manifesto-sig" id="manifesto-sig">DalgiStälle26</div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">小红书</a><a href="#">Collection</a><a href="#">Contact</a></div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,.scene-img').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pink-light)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rosegold)';ring.style.width='32px';ring.style.height='32px'});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});},{threshold:0.12});
+document.querySelectorAll('.scene-text,.emotions-img-wrap').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(28px)';el.style.transition='opacity 0.8s ease,transform 0.8s ease';obs.observe(el);});
+const mObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const lines=e.target.querySelectorAll('.manifesto-line');lines.forEach((l,i)=>setTimeout(()=>l.classList.add('visible'),i*200));setTimeout(()=>document.getElementById('manifesto-sig').classList.add('visible'),lines.length*200+300);mObs.unobserve(e.target);}});},{threshold:0.2});
+mObs.observe(document.getElementById('manifesto'));
+
+const _cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+const _badge=document.getElementById('nav-badge');
+if(_badge&&_cart.length>0){_badge.textContent=_cart.length;_badge.classList.add('show');}
+
+(function(){
+  var cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  var badge=document.getElementById('nav-badge');
+  if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+})();
+
+// ── UNIVERSAL LANGUAGE SWITCHER ──
+const PAGE_TRANSLATIONS = {
+  'about.html': {
+    eyebrows: {
+      'The Mascot · The Muse · The Standard': '마스코트 · 뮤즈 · 기준',
+      'Who She Is': '그녀는 누구인가',
+      'Her Philosophy': '그녀의 철학',
+      'Her DNA': '그녀의 DNA',
+      'Her World': '그녀의 세계',
+      'Her Ritual': '그녀의 의식',
+      'Her Energy': '그녀의 에너지',
+      'Her Many Moods': '그녀의 다양한 감정',
+      'Her Boundaries': '그녀의 경계',
+      'The Mascot': '마스코트',
+    },
+    titles: {
+      'Three sides of the same crown.': '같은 왕관의 세 면.',
+      'Part Regina.': '레지나 반.',
+      'Part Serena.': '세레나 반.',
+      'Entirely herself.': '오롯이 그녀 자신.',
+      'Meet all of Dalgi.': '달기의 모든 면을 만나세요.',
+      'Where Dalgi comes from.': '달기가 온 곳.',
+      'Want it.': '원해.',
+      'Believe it.': '믿어.',
+      'Have it.': '가져.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'collection.html': {
+    eyebrows: {
+      'The Collection · Drop 01': '컬렉션 · 드롭 01',
+      'All': '전체',
+    },
+    titles: {
+      'Wear it like you own the room.': '공간을 지배하듯 착용하세요.',
+      '26 pieces per drop': '드롭당 26개',
+    },
+    badges: {
+      'New': '신상', 'Sold out': '품절', 'left': '개 남음',
+      'Add to cart': '장바구니 담기', 'View piece': '보기',
+    }
+  },
+  'story.html': {
+    eyebrows: {
+      'The Philosophy · The Rules · The Why': '철학 · 규칙 · 이유',
+      'The Philosophy': '철학',
+      'Why Silver': '왜 실버인가',
+      'The Drop Rules': '드롭 규칙',
+    },
+    titles: {
+      'Not a brand. A belief system.': '브랜드가 아닙니다. 신념 체계입니다.',
+      'Three things we will never compromise on.': '절대 타협하지 않는 세 가지.',
+      'Sterling Silver. Nothing Else.': '스털링 실버. 그것뿐.',
+      '26 Pieces. Every Drop.': '매 드롭 26개.',
+      'No Restock. No Exceptions.': '재입고 없음. 예외 없음.',
+      'How every drop works.': '모든 드롭이 작동하는 방식.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'cart.html': {
+    eyebrows: { 'Your selection': '선택 항목' },
+    titles: { 'Cart': '장바구니', 'Order Summary': '주문 요약' },
+    buttons: {
+      'Proceed to checkout →': '결제하기 →',
+      'Continue shopping': '쇼핑 계속하기',
+      'Remove': '삭제',
+      'Shop the collection': '컬렉션 쇼핑',
+    }
+  },
+  'product.html': {
+    badges: {
+      'Add to cart': '장바구니 담기',
+      'Save for later': '나중에 보기',
+      '← Back to collection': '← 컬렉션으로',
+      'View all →': '전체 보기 →',
+      'View piece': '보기',
+      'You might also want these.': '이것도 마음에 드실 거예요.',
+    }
+  }
+};
+
+function applyPageTranslations(isKo) {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const dict = PAGE_TRANSLATIONS[page];
+  if (!dict) return;
+
+  if (dict.eyebrows) {
+    document.querySelectorAll('.section-eyebrow, .page-eyebrow, .hero-eyebrow, .drop-label, .scene-eyebrow, .card-cat, .insp-label, .trait-num').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = isKo ? (dict.eyebrows[orig] || orig) : orig;
+    });
+  }
+
+  if (dict.titles) {
+    document.querySelectorAll('.section-title, .hero-title, .drop-title, .scene-title, .trait-title, .cart-title, .summary-title, .product-name, .product-cat, .empty-title').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.titles[orig]) el.textContent = isKo ? dict.titles[orig] : orig;
+    });
+  }
+
+  if (dict.buttons) {
+    document.querySelectorAll('button, .btn-add, .btn-back, .btn-wishlist, .related-link, .load-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.buttons[orig]) el.textContent = isKo ? dict.buttons[orig] : orig;
+    });
+  }
+
+  if (dict.badges) {
+    document.querySelectorAll('.badge, .card-action, .overlay-text, .p-overlay-text, .stock-text, .filter-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.badges[orig]) el.textContent = isKo ? dict.badges[orig] : orig;
+    });
+  }
+
+  // Filter buttons KO labels
+  if (isKo && page === 'collection.html') {
+    const filterMap = {'All':'전체','Rings':'반지','Necklaces':'목걸이','Bracelets':'팔찌','Earrings':'귀걸이'};
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const orig = btn.dataset.en || btn.textContent.trim();
+      if (!btn.dataset.en) btn.dataset.en = orig;
+      btn.textContent = filterMap[orig] || orig;
+    });
+    // card categories
+    document.querySelectorAll('.card-cat, .p-cat').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = filterMap[orig] || orig;
+    });
+  } else if (!isKo && page === 'collection.html') {
+    document.querySelectorAll('.filter-btn, .card-cat, .p-cat').forEach(el => {
+      if (el.dataset.en) el.textContent = el.dataset.en;
+    });
+  }
+}
+
+// Extend setLang to also apply page translations
+const _origSetLang = typeof setLang === 'function' ? setLang : null;
+function setLang(lang) {
+  const isKo = lang === 'ko';
+  localStorage.setItem('ds26lang', lang);
+  document.body.classList.toggle('ko-mode', isKo);
+  document.documentElement.lang = lang;
+
+  // Toggle t-en/t-ko if they exist on this page
+  document.querySelectorAll('.t-en').forEach(el => el.style.display = isKo ? 'none' : '');
+  document.querySelectorAll('.t-ko').forEach(el => el.style.display = isKo ? '' : 'none');
+
+  // Toggle buttons
+  const be = document.getElementById('btn-en'), bk = document.getElementById('btn-ko');
+  if (be) be.classList.toggle('active', !isKo);
+  if (bk) bk.classList.toggle('active', isKo);
+
+  // Nav link labels
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const k = isKo ? a.dataset.ko : a.dataset.en;
+    if (k) a.textContent = k;
+  });
+
+  // Apply page-specific translations
+  applyPageTranslations(isKo);
+
+  document.title = isKo ? 'DalgiStälle26 · 실버 주얼리' : 'DalgiStälle26';
+}
+
+// Init
+(function(){
+  const l = localStorage.getItem('ds26lang') || 'en';
+  if (l === 'ko') setLang('ko');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.92);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--rg)}
+.nav-cart{position:relative;cursor:pointer;background:none;border:none;padding:4px;display:flex;align-items:center;}
+.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s;}
+.nav-cart:hover svg{opacity:1;stroke:var(--rg);}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg);color:var(--pl);font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.cart-badge.show{opacity:1;}
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:7rem 2rem 4rem;background:linear-gradient(160deg,var(--cw) 0%,var(--blush) 60%,var(--pl) 100%);}
+.hero-bg-text{position:absolute;font-family:'Pinyon Script',cursive;font-size:clamp(100px,20vw,260px);color:rgba(183,110,121,.06);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none;}
+.hero-eyebrow{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--rg);margin-bottom:1.8rem;animation:fadeUp 1s ease both;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,8vw,92px);font-weight:300;line-height:1.05;text-align:center;color:var(--deep);animation:fadeUp 1s .2s ease both;}
+.hero-title em{font-style:italic;color:var(--rg);}
+.hero-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(32px,6vw,72px);}
+.hero-sub{margin-top:1.6rem;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);opacity:.75;animation:fadeUp 1s .4s ease both;}
+.hero-cta{margin-top:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s .6s ease both;}
+.btn-primary{background:var(--deep);color:var(--pl);border:none;padding:.85rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;}
+.btn-primary:hover{background:var(--rg);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--deep);border:.5px solid var(--rg);padding:.85rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.btn-outline:hover{background:var(--blush);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);opacity:.5;animation:pulse 2s infinite;}
+.sparkle{position:absolute;pointer-events:none;font-size:14px;opacity:.35;animation:twinkle 3s ease-in-out infinite;color:var(--rg);}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:.5;transform:scale(1.2)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.drop-banner{background:var(--deep);padding:3.5rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.drop-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(183,110,121,.04) 40px,rgba(183,110,121,.04) 80px);}
+.drop-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;position:relative;}
+.drop-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4.5vw,50px);font-weight:300;color:var(--pl);position:relative;}
+.drop-title em{font-style:italic;color:var(--rg);}
+.drop-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(20px,3.5vw,38px);}
+.countdown{display:flex;gap:2rem;justify-content:center;margin-top:2rem;position:relative;}
+.count-item{display:flex;flex-direction:column;align-items:center;}
+.count-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,58px);font-weight:300;color:var(--pl);line-height:1;}
+.count-label{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--rg);margin-top:.4rem;}
+.count-sep{font-family:'Cormorant Garamond',serif;font-size:38px;color:rgba(183,110,121,.4);align-self:flex-start;margin-top:8px;}
+.collection-preview{background:var(--cw);padding:6rem 4rem;}
+.section-header{text-align:center;margin-bottom:4rem;}
+.section-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,48px);font-weight:300;color:var(--deep);line-height:1.1;}
+.section-title.ko{font-family:'Noto Serif KR',serif;font-size:clamp(20px,3vw,36px);}
+.preview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem;max-width:1100px;margin:0 auto 3rem;}
+.p-card{position:relative;overflow:hidden;background:var(--blush);aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;cursor:pointer;transition:transform .35s ease;}
+.p-card:nth-child(2){background:var(--p2);}.p-card:nth-child(3){background:var(--pm);}.p-card:nth-child(4){background:var(--deep);}
+.p-card:hover{transform:translateY(-6px)}.p-card:hover .p-overlay{opacity:1}
+.p-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Pinyon Script',cursive;font-size:70px;color:rgba(183,110,121,.15);pointer-events:none;}
+.p-card:nth-child(4) .p-placeholder{color:rgba(249,216,224,.08);}
+.p-overlay{position:absolute;inset:0;background:rgba(183,110,121,.08);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.p-overlay-text{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--deep);border-bottom:.5px solid var(--rg);padding-bottom:3px;}
+.p-card:nth-child(4) .p-overlay-text{color:var(--pl);}
+.p-badge{position:absolute;top:.8rem;right:.8rem;font-size:7px;letter-spacing:.2em;text-transform:uppercase;padding:3px 9px;background:var(--rg);color:var(--pl);}
+.p-cat{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--rg);margin-bottom:.3rem;position:relative;}
+.p-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--deep);position:relative;}
+.p-card:nth-child(4) .p-name,.p-card:nth-child(4) .p-cat{color:var(--pl);}
+.p-price{font-size:10px;letter-spacing:.08em;color:var(--rose);margin-top:.3rem;position:relative;}
+.p-card:nth-child(4) .p-price{color:var(--pm);}
+.view-all-wrap{text-align:center;}
+.btn-view-all{background:transparent;color:var(--deep);border:.5px solid var(--rg);padding:.85rem 3rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.btn-view-all:hover{background:var(--deep);color:var(--pl);}
+.dalgi-strip{background:var(--blush);display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
+.dalgi-visual{background:var(--pm);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.dalgi-crown{font-size:120px;opacity:.18;position:absolute;bottom:-10px;right:-10px;}
+.dalgi-script{font-family:'Pinyon Script',cursive;font-size:clamp(60px,10vw,110px);color:var(--rg);position:relative;z-index:1;text-align:center;}
+.dalgi-text{padding:4rem 4.5rem;display:flex;flex-direction:column;justify-content:center;}
+.dalgi-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,30px);font-style:italic;font-weight:300;color:var(--deep);line-height:1.4;margin-bottom:2rem;}
+.dalgi-quote.ko{font-family:'Noto Serif KR',serif;font-style:normal;font-size:clamp(15px,2vw,24px);}
+.dalgi-quote span{color:var(--rg);}
+.dalgi-body{font-size:11px;line-height:2;letter-spacing:.05em;color:rgba(26,17,20,.6);max-width:380px;}
+.dalgi-body.ko{font-family:'Noto Serif KR',serif;letter-spacing:.02em;}
+.brand-promise{background:var(--deep);padding:6rem 4rem;text-align:center;}
+.promise-grid{display:flex;gap:0;max-width:900px;margin:3rem auto 0;}
+.promise-item{flex:1;padding:2.5rem 2rem;border-right:.5px solid rgba(183,110,121,.15);}
+.promise-item:last-child{border-right:none;}
+.promise-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(183,110,121,.2);line-height:1;margin-bottom:1rem;}
+.promise-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--pl);margin-bottom:.8rem;line-height:1.2;}
+.promise-title.ko{font-family:'Noto Serif KR',serif;font-size:1.1rem;}
+.promise-body{font-size:10px;line-height:1.9;letter-spacing:.05em;color:rgba(249,216,224,.4);}
+.promise-body.ko{font-family:'Noto Serif KR',serif;letter-spacing:.02em;}
+.name-story{background:var(--cw);padding:6rem 4rem;text-align:center;}
+.name-pills{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;}
+.name-pill{border:.5px solid var(--rg);padding:.6rem 1.5rem;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rg);}
+.name-pill span{display:block;font-size:9px;color:rgba(26,17,20,.35);margin-top:3px;text-transform:none;letter-spacing:.05em;}
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+@media(max-width:800px){
+  .preview-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .dalgi-strip{grid-template-columns:1fr;}.dalgi-visual{min-height:280px;}.dalgi-text{padding:3rem 2rem;}
+  .promise-grid{flex-direction:column;}.promise-item{border-right:none;border-bottom:.5px solid rgba(183,110,121,.15);}
+  .promise-item:last-child{border-bottom:none;}
+  .collection-preview,.brand-promise,.name-story{padding:4rem 2rem;}
+  footer{padding:2rem;}nav{padding:1rem 1.5rem;}.nav-links{gap:1.2rem;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" class="active" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리">Our Story</a>
+      <a href="drop.html" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="Cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span>
+    <span class="t-en">Silver for the girl who knows</span><span class="t-ko" style="display:none">자신을 아는 소녀를 위한 실버</span>
+    <span class="dot">✦</span>
+    <span class="t-en">Limited to 26</span><span class="t-ko" style="display:none">26개 한정</span>
+    <span class="dot">✦</span>
+    <span class="t-en">No restock. No apologies.</span><span class="t-ko" style="display:none">재입고 없음. 사과도 없음.</span>
+    <span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span>
+    <span class="t-en">Silver for the girl who knows</span><span class="t-ko" style="display:none">자신을 아는 소녀를 위한 실버</span>
+    <span class="dot">✦</span>
+    <span class="t-en">Limited to 26</span><span class="t-ko" style="display:none">26개 한정</span>
+    <span class="dot">✦</span>
+    <span class="t-en">No restock. No apologies.</span><span class="t-ko" style="display:none">재입고 없음. 사과도 없음.</span>
+    <span class="dot">✦</span>
+  </div>
+</div>
+<section class="hero">
+  <div class="hero-bg-text">DalgiStälle</div>
+  <div class="sparkle" style="top:18%;left:12%;animation-delay:0s">✦</div>
+  <div class="sparkle" style="top:30%;right:15%;animation-delay:.8s">✧</div>
+  <div class="sparkle" style="bottom:25%;left:22%;animation-delay:1.5s">✦</div>
+  <div class="sparkle" style="top:60%;right:10%;animation-delay:2s">✧</div>
+  <p class="hero-eyebrow t-en">Est. 2026 · Silver Jewelry</p>
+  <p class="hero-eyebrow t-ko" style="display:none">2026년 창립 · 실버 주얼리</p>
+  <h1 class="hero-title t-en">She wanted it.<br><em>She has it.</em></h1>
+  <h1 class="hero-title ko t-ko" style="display:none">원하면<br><em>가진다.</em></h1>
+  <p class="hero-sub t-en">Silver that knows your worth · Limited 26-piece drops</p>
+  <p class="hero-sub t-ko" style="display:none">당신의 가치를 아는 실버 · 26개 한정 드롭</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="window.location.href='collection.html'">
+      <span class="t-en">Shop the Drop</span><span class="t-ko" style="display:none">컬렉션 보기</span>
+    </button>
+    <button class="btn-outline" onclick="window.location.href='about.html'">
+      <span class="t-en">Meet Dalgi</span><span class="t-ko" style="display:none">달기 만나기</span>
+    </button>
+  </div>
+  <p class="hero-scroll">↓</p>
+</section>
+<div class="drop-banner">
+  <p class="drop-label t-en">Current Drop</p>
+  <p class="drop-label t-ko" style="display:none">현재 드롭</p>
+  <h2 class="drop-title t-en">26 pieces. <em>Yours or someone else's.</em></h2>
+  <h2 class="drop-title ko t-ko" style="display:none">26개. <em>당신 것이거나, 다른 사람 것이거나.</em></h2>
+  <div class="countdown">
+    <div class="count-item"><div class="count-num" id="d">00</div><div class="count-label t-en">Days</div><div class="count-label t-ko" style="display:none">일</div></div>
+    <div class="count-sep">·</div>
+    <div class="count-item"><div class="count-num" id="h">00</div><div class="count-label t-en">Hours</div><div class="count-label t-ko" style="display:none">시간</div></div>
+    <div class="count-sep">·</div>
+    <div class="count-item"><div class="count-num" id="m">00</div><div class="count-label t-en">Min</div><div class="count-label t-ko" style="display:none">분</div></div>
+    <div class="count-sep">·</div>
+    <div class="count-item"><div class="count-num" id="s">00</div><div class="count-label t-en">Sec</div><div class="count-label t-ko" style="display:none">초</div></div>
+  </div>
+</div>
+<section class="collection-preview">
+  <div class="section-header">
+    <p class="section-eyebrow t-en">The Collection</p>
+    <p class="section-eyebrow t-ko" style="display:none">컬렉션</p>
+    <h2 class="section-title t-en">Wear it like you own the room.</h2>
+    <h2 class="section-title ko t-ko" style="display:none">공간을 지배하듯 착용하세요.</h2>
+  </div>
+  <div class="preview-grid">
+    <div class="p-card" onclick="window.location.href='product.html?p=Ice+Queen+Ring'">
+      <div class="p-placeholder">◈</div>
+      <div class="p-overlay"><span class="p-overlay-text t-en">View piece</span><span class="p-overlay-text t-ko" style="display:none">보기</span></div>
+      <span class="p-badge t-en">2 left</span><span class="p-badge t-ko" style="display:none">2개 남음</span>
+      <p class="p-cat t-en">Rings</p><p class="p-cat t-ko" style="display:none">반지</p>
+      <p class="p-name">Ice Queen Ring</p><p class="p-price">₩ 68,000</p>
+    </div>
+    <div class="p-card" onclick="window.location.href='product.html?p=First+Kiss+Necklace'">
+      <div class="p-placeholder">◇</div>
+      <div class="p-overlay"><span class="p-overlay-text t-en">View piece</span><span class="p-overlay-text t-ko" style="display:none">보기</span></div>
+      <span class="p-badge t-en">5 left</span><span class="p-badge t-ko" style="display:none">5개 남음</span>
+      <p class="p-cat t-en">Necklaces</p><p class="p-cat t-ko" style="display:none">목걸이</p>
+      <p class="p-name">First Kiss Necklace</p><p class="p-price">₩ 88,000</p>
+    </div>
+    <div class="p-card" onclick="window.location.href='product.html?p=Pink+Throne+Bracelet'">
+      <div class="p-placeholder">◉</div>
+      <div class="p-overlay"><span class="p-overlay-text t-en">View piece</span><span class="p-overlay-text t-ko" style="display:none">보기</span></div>
+      <span class="p-badge t-en">New</span><span class="p-badge t-ko" style="display:none">신상</span>
+      <p class="p-cat t-en">Bracelets</p><p class="p-cat t-ko" style="display:none">팔찌</p>
+      <p class="p-name">Pink Throne Bracelet</p><p class="p-price">₩ 72,000</p>
+    </div>
+    <div class="p-card" onclick="window.location.href='product.html?p=Regina+Hoops'">
+      <div class="p-placeholder">◈</div>
+      <div class="p-overlay"><span class="p-overlay-text t-en">View piece</span><span class="p-overlay-text t-ko" style="display:none">보기</span></div>
+      <span class="p-badge t-en">New</span><span class="p-badge t-ko" style="display:none">신상</span>
+      <p class="p-cat t-en">Earrings</p><p class="p-cat t-ko" style="display:none">귀걸이</p>
+      <p class="p-name">Regina Hoops</p><p class="p-price">₩ 62,000</p>
+    </div>
+  </div>
+  <div class="view-all-wrap">
+    <button class="btn-view-all" onclick="window.location.href='collection.html'">
+      <span class="t-en">View full collection →</span><span class="t-ko" style="display:none">전체 컬렉션 보기 →</span>
+    </button>
+  </div>
+</section>
+<div class="dalgi-strip">
+  <div class="dalgi-visual">
+    <div class="dalgi-crown">♛</div>
+    <div class="dalgi-script">Dalgi</div>
+  </div>
+  <div class="dalgi-text">
+    <p class="section-eyebrow t-en">The Mascot</p>
+    <p class="section-eyebrow t-ko" style="display:none">브랜드 마스코트</p>
+    <p class="dalgi-quote t-en">"If she wants it,<br><span>she already has it."</span></p>
+    <p class="dalgi-quote ko t-ko" style="display:none"><span>"원하면 이미 가진 것."</span></p>
+    <p class="dalgi-body t-en">Dalgi is part Regina George, part Serena van der Woodsen — entirely herself. The black cat with a pink crown who never waits for permission.</p>
+    <p class="dalgi-body ko t-ko" style="display:none">달기는 레지나 조지와 세레나 반 더 우드슨을 합친 캐릭터 — 오롯이 그녀 자신. 핑크 왕관을 쓴 검은 고양이는 허락을 기다리지 않습니다.</p>
+  </div>
+</div>
+<section class="brand-promise">
+  <p class="section-eyebrow t-en">The Promise</p>
+  <p class="section-eyebrow t-ko" style="display:none">브랜드 약속</p>
+  <h2 class="section-title t-en" style="color:var(--pl)">Three things we never break.</h2>
+  <h2 class="section-title ko t-ko" style="display:none;color:var(--pl)">절대 바꾸지 않는 세 가지.</h2>
+  <div class="promise-grid">
+    <div class="promise-item">
+      <div class="promise-num">925</div>
+      <h3 class="promise-title t-en">Sterling Silver.<br>Always.</h3>
+      <h3 class="promise-title ko t-ko" style="display:none">스털링 실버.<br>언제나.</h3>
+      <p class="promise-body t-en">Not plated. Not toned. Real sterling silver 925 in every single piece.</p>
+      <p class="promise-body ko t-ko" style="display:none">도금 아님. 실버 톤 아님. 모든 피스에 진짜 925 스털링 실버.</p>
+    </div>
+    <div class="promise-item">
+      <div class="promise-num">26</div>
+      <h3 class="promise-title t-en">26 Pieces.<br>Per Drop.</h3>
+      <h3 class="promise-title ko t-ko" style="display:none">드롭당<br>26개.</h3>
+      <p class="promise-body t-en">Every collection limited to exactly 26. The number is the soul of this brand.</p>
+      <p class="promise-body ko t-ko" style="display:none">모든 컬렉션은 정확히 26개. 이 숫자는 이 브랜드의 영혼입니다.</p>
+    </div>
+    <div class="promise-item">
+      <div class="promise-num">∅</div>
+      <h3 class="promise-title t-en">No Restock.<br>Ever.</h3>
+      <h3 class="promise-title ko t-ko" style="display:none">재입고<br>없음.</h3>
+      <p class="promise-body t-en">When 26 are gone, they're gone. No exceptions. Not even for DMs.</p>
+      <p class="promise-body ko t-ko" style="display:none">26개가 소진되면 끝. 예외 없음. DM도 소용없음.</p>
+    </div>
+  </div>
+</section>
+<section class="name-story">
+  <p class="section-eyebrow t-en">The Name</p>
+  <p class="section-eyebrow t-ko" style="display:none">브랜드 이름</p>
+  <h2 class="section-title t-en">A name no one else can claim.</h2>
+  <h2 class="section-title ko t-ko" style="display:none">누구도 가질 수 없는 이름.</h2>
+  <div class="name-pills">
+    <div class="name-pill">달기 · Dalgi<span class="t-en">Korean for strawberry</span><span class="t-ko" style="display:none">딸기를 뜻하는 한국어</span></div>
+    <div class="name-pill">Ställe<span class="t-en">Swedish for place</span><span class="t-ko" style="display:none">스웨덴어로 '장소'</span></div>
+    <div class="name-pill">26<span class="t-en">Her number. Her year.</span><span class="t-ko" style="display:none">그녀의 숫자. 그녀의 해.</span></div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a><a href="#">小红书</a>
+    <a href="collection.html" class="t-en">Collection</a><a href="collection.html" class="t-ko" style="display:none">컬렉션</a>
+    <a href="about.html" class="t-en">About</a><a href="about.html" class="t-ko" style="display:none">소개</a>
+  </div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.p-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+const target=new Date(Date.now()+3*864e5+14*36e5+22*6e4);
+function tick(){
+  const d=target-Date.now();if(d<=0)return;
+  document.getElementById('d').textContent=String(Math.floor(d/864e5)).padStart(2,'0');
+  document.getElementById('h').textContent=String(Math.floor(d%864e5/36e5)).padStart(2,'0');
+  document.getElementById('m').textContent=String(Math.floor(d%36e5/6e4)).padStart(2,'0');
+  document.getElementById('s').textContent=String(Math.floor(d%6e4/1e3)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+function setLang(lang){
+  const isKo=lang==='ko';
+  localStorage.setItem('ds26lang',lang);
+  document.body.classList.toggle('ko-mode',isKo);
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.t-en').forEach(el=>el.style.display=isKo?'none':'');
+  document.querySelectorAll('.t-ko').forEach(el=>el.style.display=isKo?'':'none');
+  document.getElementById('btn-en').classList.toggle('active',!isKo);
+  document.getElementById('btn-ko').classList.toggle('active',isKo);
+  document.querySelectorAll('.nav-links a').forEach(a=>{const k=isKo?a.dataset.ko:a.dataset.en;if(k)a.textContent=k;});
+  document.title=isKo?'DalgiStälle26 · 실버 주얼리':'DalgiStälle26';
+}
+const savedLang=localStorage.getItem('ds26lang')||'en';
+if(savedLang==='ko')setLang('ko');
+(function(){
+  const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  const badge=document.getElementById('nav-badge');
+  if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+})();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});},{threshold:0.1});
+document.querySelectorAll('.p-card,.promise-item,.name-pill').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='opacity .7s ease,transform .7s ease';obs.observe(el);
+});
+</script>
+</body>
+</html>

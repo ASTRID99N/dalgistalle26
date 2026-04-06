@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Love Lock Set — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.95);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover{opacity:1;color:var(--rg)}
+.nav-cart{position:relative;cursor:pointer;background:none;border:none;padding:4px;display:flex;align-items:center;}
+.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s;}
+.nav-cart:hover svg{opacity:1;stroke:var(--rg);}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg);color:var(--pl);font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.cart-badge.show{opacity:1;}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.breadcrumb{padding:1.2rem 5rem;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,17,20,.35);display:flex;gap:.8rem;align-items:center;}
+.breadcrumb a{color:rgba(26,17,20,.35);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--rg);}
+.breadcrumb span{color:var(--rg);}
+.product-main{display:grid;grid-template-columns:1.1fr 0.9fr;min-height:92vh;align-items:start;}
+.gallery{padding:2rem 1rem 2rem 5rem;position:sticky;top:56px;}
+.gallery-main{width:100%;aspect-ratio:1;overflow:hidden;background:#0A0A0A;position:relative;margin-bottom:1rem;}
+.gallery-main img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:opacity .4s ease;}
+.gallery-main img.fade{opacity:0;}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;}
+.thumb{aspect-ratio:1;overflow:hidden;cursor:pointer;opacity:.55;transition:opacity .2s;border:.5px solid transparent;}
+.thumb.active{opacity:1;border-color:var(--rg);}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.product-info{padding:3rem 5rem 5rem 3rem;display:flex;flex-direction:column;}
+.product-cat{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rg);margin-bottom:.8rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,54px);font-weight:300;color:var(--deep);line-height:.95;margin-bottom:.6rem;}
+.product-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(13px,1.6vw,18px);font-style:italic;font-weight:300;color:var(--rg);margin-bottom:1.8rem;}
+.product-divider{width:40px;height:.5px;background:var(--rg);margin-bottom:1.8rem;}
+.price-row{display:flex;align-items:baseline;gap:1rem;margin-bottom:.4rem;}
+.product-price{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--deep);}
+.price-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--rg);border:.5px solid var(--rg);padding:3px 8px;align-self:center;}
+.product-price-sub{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(26,17,20,.32);margin-bottom:2rem;}
+.stock-row{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;padding:.8rem 1rem;background:rgba(183,110,121,.05);border-left:2px solid var(--rg);}
+.stock-dot{width:7px;height:7px;border-radius:50%;background:var(--rg);flex-shrink:0;}
+.stock-dot.low{background:#E8A87C;}
+.stock-text{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(26,17,20,.5);}
+.product-story{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,1.7vw,21px);font-weight:300;line-height:1.65;color:var(--deep);margin-bottom:1.2rem;}
+.product-story em{font-style:italic;color:var(--rg);}
+.product-body{font-size:11px;line-height:2;letter-spacing:.05em;color:rgba(26,17,20,.52);margin-bottom:2rem;max-width:400px;}
+.included{background:var(--blush);padding:1.2rem 1.5rem;margin-bottom:2rem;}
+.included-label{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--rg);margin-bottom:.8rem;}
+.included-items{display:flex;flex-direction:column;gap:.4rem;}
+.included-item{font-size:10px;letter-spacing:.06em;color:var(--deep);display:flex;gap:.6rem;align-items:center;}
+.included-item::before{content:'✦';font-size:8px;color:var(--rg);}
+.details{border-top:.5px solid rgba(183,110,121,.15);margin-bottom:2rem;}
+.detail-row{border-bottom:.5px solid rgba(183,110,121,.1);padding:.8rem 0;display:flex;justify-content:space-between;align-items:center;}
+.detail-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,17,20,.38);}
+.detail-val{font-size:10px;letter-spacing:.06em;color:var(--deep);text-align:right;}
+.product-cta{display:flex;flex-direction:column;gap:.7rem;}
+.btn-add{background:var(--deep);color:var(--pl);border:none;padding:1.1rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;width:100%;}
+.btn-add:hover{background:var(--rg);transform:translateY(-2px)}
+.btn-add.added{background:var(--rg);}
+.btn-wishlist{background:transparent;color:var(--deep);border:.5px solid rgba(183,110,121,.3);padding:.9rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .25s;width:100%;}
+.btn-wishlist:hover{border-color:var(--rg);color:var(--rg);}
+.btn-back{background:transparent;border:none;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(26,17,20,.3);cursor:pointer;padding:0;font-family:'Montserrat',sans-serif;transition:color .2s;text-align:left;}
+.btn-back:hover{color:var(--rg);}
+.related{padding:5rem;background:var(--blush);}
+.related-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem;}
+.related-title{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:300;color:var(--deep);}
+.related-link{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--rg);text-decoration:none;}
+.related-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;}
+.rel-card{cursor:pointer;transition:transform .3s;}
+.rel-card:hover{transform:translateY(-4px)}
+.rel-img{aspect-ratio:3/4;overflow:hidden;position:relative;}
+.rel-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Pinyon Script',cursive;font-size:36px;color:rgba(183,110,121,.2);background:var(--p2);}
+.rel-img-ph.c{background:var(--deep);color:rgba(249,216,224,.1);}
+.rel-img-ph.d{background:var(--pm);}
+.rel-hover{position:absolute;inset:0;background:rgba(183,110,121,.1);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.rel-card:hover .rel-hover{opacity:1;}
+.rel-hover-text{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--cw);border-bottom:.5px solid var(--rg);padding-bottom:3px;}
+.rel-info{padding:.7rem 0 0;}
+.rel-cat{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--rg);margin-bottom:.2rem;}
+.rel-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--deep);margin-bottom:.2rem;}
+.rel-price{font-size:9px;letter-spacing:.08em;color:var(--rose);}
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+@media(max-width:880px){
+  .product-main{grid-template-columns:1fr;}.gallery{padding:1.5rem;position:static;}
+  .product-info{padding:2rem 1.5rem 4rem;}.breadcrumb{padding:1rem 1.5rem;}
+  .related{padding:3rem 1.5rem;}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  footer{padding:2rem;}nav{padding:1rem 1.5rem;}.nav-links{gap:1rem;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="collection.html">Collection</a><a href="about.html">About Dalgi</a><a href="story.html">Our Story</a>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Love Lock Set</span><span class="dot">✦</span><span>Sterling silver 925</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Love Lock Set</span><span class="dot">✦</span><span>Sterling silver 925</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span>
+  </div>
+</div>
+<div class="breadcrumb"><a href="index.html">Home</a> › <a href="collection.html">Collection</a> › <span>Love Lock Set</span></div>
+<div class="product-main">
+  <div class="gallery">
+    <div class="gallery-main">
+      <img id="main-img" src="images/products/love-lock-pink.png" alt="Love Lock Set"/>
+    </div>
+    <div class="gallery-thumbs">
+      <div class="thumb active" onclick="switchImg(this,'images/products/love-lock-pink.png')"><img src="images/products/love-lock-pink.png" alt="Pink editorial"/></div>
+      <div class="thumb" onclick="switchImg(this,'images/products/love-lock-vanity.png')"><img src="images/products/love-lock-vanity.png" alt="Vanity flatlay"/></div>
+      <div class="thumb" onclick="switchImg(this,'images/products/love-lock-necklace-dark.png')"><img src="images/products/love-lock-necklace-dark.png" alt="Dark editorial"/></div>
+      <div class="thumb" onclick="switchImg(this,'images/products/love-lock-ring-dark.png')"><img src="images/products/love-lock-ring-dark.png" alt="Ring set dark"/></div>
+      <div class="thumb" onclick="switchImg(this,'images/products/love-lock-clean.png')"><img src="images/products/love-lock-clean.png" alt="Clean bracelet"/></div>
+    </div>
+  </div>
+  <div class="product-info">
+    <p class="product-cat">Bracelets · Sets</p>
+    <h1 class="product-name">Love Lock<br>Set</h1>
+    <p class="product-tagline">"She locked it in. Now it's hers forever."</p>
+    <div class="product-divider"></div>
+    <div class="price-row">
+      <div class="product-price">₩ 128,000</div>
+      <div class="price-tag">Set price</div>
+    </div>
+    <p class="product-price-sub">Sterling silver 925 · Free shipping in Korea</p>
+    <div class="stock-row">
+      <div class="stock-dot low"></div>
+      <span class="stock-text">Only 8 of 26 left — no restock ever</span>
+    </div>
+    <p class="product-story">Some locks keep things out.<br><em>This one locks something in.</em></p>
+    <p class="product-body">The Love Lock Set is the first drop piece that started with a feeling — the feeling of deciding something is yours and refusing to let go. A chunky silver chain bracelet with a heart charm and a padlock pendant, paired with a delicate lock ring. Wear them together. Wear them apart. Either way, the message is the same: she chose this, and she doesn't go back on her choices.</p>
+    <div class="included">
+      <p class="included-label">What's included</p>
+      <div class="included-items">
+        <span class="included-item">Chain bracelet with heart charm + padlock pendant</span>
+        <span class="included-item">Lock charm ring</span>
+        <span class="included-item">DalgiStälle26 gift packaging</span>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-row"><span class="detail-label">Material</span><span class="detail-val">Sterling Silver 925</span></div>
+      <div class="detail-row"><span class="detail-label">Pieces in set</span><span class="detail-val">Bracelet + Ring</span></div>
+      <div class="detail-row"><span class="detail-label">Drop limit</span><span class="detail-val">26 sets · No restock</span></div>
+      <div class="detail-row"><span class="detail-label">Shipping</span><span class="detail-val">Korea free · International available</span></div>
+      <div class="detail-row"><span class="detail-label">Care</span><span class="detail-val">Keep dry · Polish with soft cloth</span></div>
+    </div>
+    <div class="product-cta">
+      <button class="btn-add" id="add-btn" onclick="handleAdd()">Add to cart</button>
+      <button class="btn-wishlist">Save for later</button>
+      <button class="btn-back" onclick="window.location.href='collection.html'">← Back to collection</button>
+    </div>
+  </div>
+</div>
+<section class="related">
+  <div class="related-header"><h2 class="related-title">You might also want these.</h2><a href="collection.html" class="related-link">View all →</a></div>
+  <div class="related-grid">
+    <div class="rel-card" onclick="window.location.href='product.html?p=Pink+Throne+Ring'"><div class="rel-img"><div class="rel-img-ph">◇</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat">Rings</p><p class="rel-name">Pink Throne Ring</p><p class="rel-price">₩ 72,000</p></div></div>
+    <div class="rel-card" onclick="window.location.href='product.html?p=First+Kiss+Necklace'"><div class="rel-img"><div class="rel-img-ph d">◈</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat">Necklaces</p><p class="rel-name">First Kiss Necklace</p><p class="rel-price">₩ 88,000</p></div></div>
+    <div class="rel-card" onclick="window.location.href='product.html?p=Regina+Hoops'"><div class="rel-img"><div class="rel-img-ph c">◇</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat">Earrings</p><p class="rel-name">Regina Hoops</p><p class="rel-price">₩ 62,000</p></div></div>
+    <div class="rel-card" onclick="window.location.href='product.html?p=Serena+Cuff'"><div class="rel-img"><div class="rel-img-ph">◉</div><div class="rel-hover"><span class="rel-hover-text">View piece</span></div></div><div class="rel-info"><p class="rel-cat">Bracelets</p><p class="rel-name">Serena Cuff</p><p class="rel-price">₩ 84,000</p></div></div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links"><a href="collection.html">Collection</a><a href="about.html">About Dalgi</a><a href="#">Instagram</a><a href="#">小红书</a></div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.rel-card,.thumb').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+function switchImg(thumb,src){
+  const main=document.getElementById('main-img');
+  main.classList.add('fade');
+  setTimeout(()=>{main.src=src;main.classList.remove('fade');},250);
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+function handleAdd(){
+  const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  const name='Love Lock Set';
+  if(!cart.find(i=>i.name===name)){cart.push({name,cat:'Sets',price:128000,imgClass:'',id:Date.now()});localStorage.setItem('ds26cart',JSON.stringify(cart));}
+  const badge=document.getElementById('nav-badge');badge.textContent=cart.length;badge.classList.add('show');
+  const btn=document.getElementById('add-btn');btn.textContent='Added ✦';btn.classList.add('added');
+  setTimeout(()=>{btn.textContent='Add to cart';btn.classList.remove('added');},1400);
+}
+(function(){const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');const badge=document.getElementById('nav-badge');if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}})();
+</script>
+</body>
+</html>

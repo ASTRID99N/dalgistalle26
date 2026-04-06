@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Brand Story — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.92);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--rg)}
+.nav-cart{position:relative;cursor:none;background:none;border:none;padding:4px;display:flex;align-items:center;}
+.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s,stroke .2s;}
+.nav-cart:hover svg{opacity:1;stroke:var(--rg);}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg);color:var(--pl);font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:400;letter-spacing:0;opacity:0;transition:opacity .2s;}
+.cart-badge.show{opacity:1;}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* HERO */
+.story-hero{min-height:100vh;background:var(--deep);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:8rem 4rem 6rem;text-align:center;}
+.story-hero-bg{position:absolute;font-family:'Pinyon Script',cursive;font-size:clamp(160px,30vw,380px);color:rgba(183,110,121,.05);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;line-height:1;}
+.hero-eyebrow{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--rg);margin-bottom:1.5rem;animation:fadeUp 1s ease both;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8vw,100px);font-weight:300;color:var(--pl);line-height:.95;animation:fadeUp 1s .15s ease both;}
+.hero-title em{font-style:italic;color:var(--rg);}
+.hero-sub{margin-top:2rem;font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,22px);font-style:italic;font-weight:300;color:rgba(249,216,224,.5);max-width:560px;line-height:1.6;animation:fadeUp 1s .3s ease both;}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--rg);opacity:.5;animation:pulse 2s infinite;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
+
+/* PHILOSOPHY PILLARS */
+.pillars{background:var(--cw);padding:7rem 6rem;}
+.pillars-header{text-align:center;margin-bottom:5rem;}
+.section-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,48px);font-weight:300;color:var(--deep);line-height:1.1;}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1000px;margin:0 auto;}
+.pillar{padding:3.5rem 3rem;position:relative;overflow:hidden;background:var(--blush);transition:background .3s;}
+.pillar:hover{background:var(--p2)}
+.pillar:nth-child(2){background:var(--deep);}
+.pillar:nth-child(2):hover{background:#2A1820}
+.pillar:nth-child(2) .pillar-num{color:rgba(183,110,121,.2);}
+.pillar:nth-child(2) .pillar-title{color:var(--pl);}
+.pillar:nth-child(2) .pillar-body{color:rgba(249,216,224,.5);}
+.pillar:nth-child(2) .pillar-rule{border-color:rgba(183,110,121,.3);color:var(--rg);}
+.pillar-num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(183,110,121,.12);position:absolute;top:.5rem;right:1.5rem;line-height:1;}
+.pillar-icon{font-size:20px;margin-bottom:1.5rem;opacity:.6;}
+.pillar-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--deep);line-height:1.15;margin-bottom:1.2rem;}
+.pillar-body{font-size:11px;line-height:2;letter-spacing:.05em;color:rgba(26,17,20,.58);margin-bottom:1.5rem;}
+.pillar-rule{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--rg);border-top:.5px solid rgba(183,110,121,.3);padding-top:1rem;}
+
+/* SILVER SECTION */
+.silver-section{background:var(--deep);padding:7rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.silver-left{}
+.silver-right{text-align:right;}
+.silver-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,56px);font-weight:300;color:var(--pl);line-height:1.05;margin-bottom:2rem;}
+.silver-title em{font-style:italic;color:var(--rg);}
+.silver-body{font-size:11px;line-height:2.1;letter-spacing:.06em;color:rgba(249,216,224,.5);max-width:440px;}
+.silver-stat{margin-top:3rem;}
+.silver-stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,96px);font-weight:300;color:var(--rg);line-height:1;}
+.silver-stat-label{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(249,216,224,.4);margin-top:.5rem;}
+.silver-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.8vw,34px);font-style:italic;font-weight:300;color:var(--pl);line-height:1.4;text-align:right;}
+.silver-quote em{color:var(--rg);}
+.silver-attr{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(183,110,121,.6);margin-top:1.5rem;display:block;text-align:right;}
+
+/* DROP RULES */
+.drop-rules{background:var(--blush);padding:7rem 6rem;text-align:center;}
+.rules-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:960px;margin:3rem auto 0;}
+.rule{background:var(--cw);padding:2.5rem 2rem;border:.5px solid rgba(183,110,121,.12);transition:border-color .3s;}
+.rule:hover{border-color:var(--rg);}
+.rule-icon{font-size:22px;margin-bottom:1.2rem;opacity:.55;}
+.rule-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep);margin-bottom:.8rem;line-height:1.2;}
+.rule-body{font-size:10px;line-height:1.9;letter-spacing:.05em;color:rgba(26,17,20,.5);}
+
+/* MANIFESTO STRIP */
+.manifesto-strip{background:var(--deep);padding:5rem 6rem;text-align:center;position:relative;overflow:hidden;}
+.manifesto-strip-bg{position:absolute;font-family:'Pinyon Script',cursive;font-size:260px;color:rgba(183,110,121,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;}
+.manifesto-lines{max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.m-line{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,38px);font-weight:300;color:var(--pl);line-height:1.35;margin-bottom:.5rem;opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;}
+.m-line.visible{opacity:1;transform:translateY(0)}
+.m-line em{font-style:italic;color:var(--rg);}
+.m-line.big{font-size:clamp(22px,4vw,52px);font-weight:600;}
+.m-sig{margin-top:2.5rem;font-family:'Pinyon Script',cursive;font-size:clamp(36px,6vw,72px);color:var(--rg);opacity:0;transition:opacity 1s ease 1.2s;}
+.m-sig.visible{opacity:1;}
+
+/* CTA */
+.story-cta{background:var(--cw);padding:6rem;text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,48px);font-weight:300;color:var(--deep);margin-bottom:1rem;}
+.cta-title em{font-style:italic;color:var(--rg);}
+.cta-sub{font-size:11px;letter-spacing:.08em;color:rgba(26,17,20,.45);margin-bottom:3rem;}
+.cta-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;}
+.btn-dark{background:var(--deep);color:var(--pl);border:none;padding:.9rem 2.8rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;}
+.btn-dark:hover{background:var(--rg);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--deep);border:.5px solid var(--rg);padding:.9rem 2.8rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.btn-outline:hover{background:var(--blush);transform:translateY(-2px)}
+
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+
+@media(max-width:900px){
+  .pillars-grid,.rules-grid{grid-template-columns:1fr;}
+  .silver-section{grid-template-columns:1fr;gap:3rem;}
+  .silver-right{text-align:left;}
+  .silver-quote,.silver-attr{text-align:left;}
+  .pillars,.silver-section,.drop-rules,.story-cta,footer{padding-left:2rem;padding-right:2rem;}
+  nav{padding:1rem 1.5rem;}.nav-links{gap:1.2rem;}
+}
+
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html" data-en="Home" data-ko="홈">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리" class="active">Our Story</a>
+      <a href="drop.html" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="View cart">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Silver only. Always.</span><span class="dot">✦</span><span>26 pieces. No restock.</span><span class="dot">✦</span><span>One name. Three languages.</span><span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Silver only. Always.</span><span class="dot">✦</span><span>26 pieces. No restock.</span><span class="dot">✦</span><span>One name. Three languages.</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="story-hero">
+  <div class="story-hero-bg">Story</div>
+  <p class="hero-eyebrow">The Philosophy · The Rules · The Why</p>
+  <h1 class="hero-title">Not a brand.<br><em>A belief system.</em></h1>
+  <p class="hero-sub">DalgiStälle26 was built on three rules and one girl who refused to make jewelry for everyone.</p>
+  <p class="hero-scroll">↓ scroll</p>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="pillars-header">
+    <p class="section-eyebrow">The Philosophy</p>
+    <h2 class="section-title">Three things we<br>will never compromise on.</h2>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar reveal">
+      <div class="pillar-num">01</div>
+      <div class="pillar-icon">◈</div>
+      <h3 class="pillar-title">Sterling Silver.<br>Nothing Else.</h3>
+      <p class="pillar-body">Every single piece in every single drop is sterling silver. Not silver-plated. Not silver-toned. Not "silver-inspired." Sterling. 925. The real thing. We chose silver because it ages with you — it gets more interesting the longer you wear it, just like the girl who wears it.</p>
+      <div class="pillar-rule">925 sterling silver · always</div>
+    </div>
+    <div class="pillar reveal">
+      <div class="pillar-num">02</div>
+      <div class="pillar-icon">♛</div>
+      <h3 class="pillar-title">26 Pieces.<br>Every Drop.</h3>
+      <p class="pillar-body">Every collection is limited to exactly 26 pieces. The number is not random — it's the founding number of this brand, woven into its name and its DNA. 26 pieces means the girl who gets one is not everyone. She is someone who decided she wanted it before it was gone.</p>
+      <div class="pillar-rule">26 pieces · per drop · always</div>
+    </div>
+    <div class="pillar reveal">
+      <div class="pillar-num">03</div>
+      <div class="pillar-icon">✦</div>
+      <h3 class="pillar-title">No Restock.<br>No Exceptions.</h3>
+      <p class="pillar-body">When the 26 pieces are gone, they're gone. We don't restock. We don't make exceptions for anyone. Not for DMs. Not for emails. Not for "I was going to buy it but I waited." The girl who has it, has it. The girl who didn't — she'll be ready for the next drop.</p>
+      <div class="pillar-rule">sold out means sold out · forever</div>
+    </div>
+  </div>
+</section>
+
+<!-- SILVER SECTION -->
+<div class="silver-section">
+  <div class="silver-left reveal">
+    <p class="section-eyebrow" style="color:var(--rg)">Why Silver</p>
+    <h2 class="silver-title">Silver doesn't<br>pretend to be<br><em>something else.</em></h2>
+    <p class="silver-body">Gold asks for your attention. Silver just exists — cold, clean, impossibly elegant. It doesn't shout. It doesn't need to. It sits on your wrist or around your neck and lets you do the talking. That's why every DalgiStälle26 piece is silver. It matches the energy of the girl who wears it.</p>
+    <div class="silver-stat">
+      <div class="silver-stat-num">925</div>
+      <div class="silver-stat-label">Sterling silver purity · The only standard we accept</div>
+    </div>
+  </div>
+  <div class="silver-right reveal">
+    <p class="silver-quote">"Silver is the metal of girls who don't need to announce themselves. It announces them <em>for free.</em>"</p>
+    <span class="silver-attr">— DalgiStälle26</span>
+  </div>
+</div>
+
+<!-- DROP RULES -->
+<section class="drop-rules">
+  <p class="section-eyebrow">The Drop Rules</p>
+  <h2 class="section-title">How every drop works.<br>No exceptions. Ever.</h2>
+  <div class="rules-grid">
+    <div class="rule reveal">
+      <div class="rule-icon">◈</div>
+      <h3 class="rule-title">26 pieces announced</h3>
+      <p class="rule-body">Every drop starts with an announcement — date, time, and a preview of the pieces. That's your warning. Use it.</p>
+    </div>
+    <div class="rule reveal">
+      <div class="rule-icon">◇</div>
+      <h3 class="rule-title">Drop goes live</h3>
+      <p class="rule-body">At the exact time posted. No early access. No VIP queue. Everyone starts at the same moment — it's just about who moves first.</p>
+    </div>
+    <div class="rule reveal">
+      <div class="rule-icon">◉</div>
+      <h3 class="rule-title">26 sold = drop closed</h3>
+      <p class="rule-body">The moment the 26th piece sells, the drop is over. The page goes dark. No waitlist. No "notify me." It's done.</p>
+    </div>
+    <div class="rule reveal">
+      <div class="rule-icon">✦</div>
+      <h3 class="rule-title">Next drop. New pieces.</h3>
+      <p class="rule-body">Sold-out pieces never return. The next drop brings entirely new designs. Dalgi doesn't repeat herself — and neither do we.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<div class="manifesto-strip">
+  <div class="manifesto-strip-bg">Rules</div>
+  <div class="manifesto-lines" id="manifesto">
+    <p class="m-line">We don't make jewelry for everyone.</p>
+    <p class="m-line big"><em>We make it for the girl who decides.</em></p>
+    <p class="m-line" style="margin-top:1.5rem">The girl who sees it and knows.</p>
+    <p class="m-line big"><em>The girl who doesn't wait.</em></p>
+    <p class="m-line" style="margin-top:1.5rem;font-size:clamp(12px,1.8vw,18px);color:var(--rg);">26 pieces. Sterling silver. No restock.</p>
+    <div class="m-sig" id="m-sig">DalgiStälle26</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="story-cta">
+  <h2 class="cta-title">Ready to wear it like<br>you <em>own</em> the room?</h2>
+  <p class="cta-sub">26 pieces. Sterling silver. No second chances.</p>
+  <div class="cta-btns">
+    <button class="btn-dark" onclick="window.location.href='collection.html'">Shop the collection</button>
+    <button class="btn-outline" onclick="window.location.href='about.html'">Meet Dalgi</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links">
+    <a href="collection.html" data-en="Collection" data-ko="컬렉션">Collection</a>
+    <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+    <a href="#">Instagram</a>
+    <a href="#">小红书</a>
+  </div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.pillar,.rule').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(28px)';el.style.transition='opacity .7s ease,transform .7s ease';obs.observe(el);});
+const mObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const lines=e.target.querySelectorAll('.m-line');lines.forEach((l,i)=>setTimeout(()=>l.classList.add('visible'),i*200));setTimeout(()=>document.getElementById('m-sig').classList.add('visible'),lines.length*200+200);mObs.unobserve(e.target);}});},{threshold:0.2});
+mObs.observe(document.getElementById('manifesto'));
+const cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+const badge=document.getElementById('nav-badge');
+if(cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+
+(function(){
+  var cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  var badge=document.getElementById('nav-badge');
+  if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+})();
+
+// ── UNIVERSAL LANGUAGE SWITCHER ──
+const PAGE_TRANSLATIONS = {
+  'about.html': {
+    eyebrows: {
+      'The Mascot · The Muse · The Standard': '마스코트 · 뮤즈 · 기준',
+      'Who She Is': '그녀는 누구인가',
+      'Her Philosophy': '그녀의 철학',
+      'Her DNA': '그녀의 DNA',
+      'Her World': '그녀의 세계',
+      'Her Ritual': '그녀의 의식',
+      'Her Energy': '그녀의 에너지',
+      'Her Many Moods': '그녀의 다양한 감정',
+      'Her Boundaries': '그녀의 경계',
+      'The Mascot': '마스코트',
+    },
+    titles: {
+      'Three sides of the same crown.': '같은 왕관의 세 면.',
+      'Part Regina.': '레지나 반.',
+      'Part Serena.': '세레나 반.',
+      'Entirely herself.': '오롯이 그녀 자신.',
+      'Meet all of Dalgi.': '달기의 모든 면을 만나세요.',
+      'Where Dalgi comes from.': '달기가 온 곳.',
+      'Want it.': '원해.',
+      'Believe it.': '믿어.',
+      'Have it.': '가져.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'collection.html': {
+    eyebrows: {
+      'The Collection · Drop 01': '컬렉션 · 드롭 01',
+      'All': '전체',
+    },
+    titles: {
+      'Wear it like you own the room.': '공간을 지배하듯 착용하세요.',
+      '26 pieces per drop': '드롭당 26개',
+    },
+    badges: {
+      'New': '신상', 'Sold out': '품절', 'left': '개 남음',
+      'Add to cart': '장바구니 담기', 'View piece': '보기',
+    }
+  },
+  'story.html': {
+    eyebrows: {
+      'The Philosophy · The Rules · The Why': '철학 · 규칙 · 이유',
+      'The Philosophy': '철학',
+      'Why Silver': '왜 실버인가',
+      'The Drop Rules': '드롭 규칙',
+    },
+    titles: {
+      'Not a brand. A belief system.': '브랜드가 아닙니다. 신념 체계입니다.',
+      'Three things we will never compromise on.': '절대 타협하지 않는 세 가지.',
+      'Sterling Silver. Nothing Else.': '스털링 실버. 그것뿐.',
+      '26 Pieces. Every Drop.': '매 드롭 26개.',
+      'No Restock. No Exceptions.': '재입고 없음. 예외 없음.',
+      'How every drop works.': '모든 드롭이 작동하는 방식.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'cart.html': {
+    eyebrows: { 'Your selection': '선택 항목' },
+    titles: { 'Cart': '장바구니', 'Order Summary': '주문 요약' },
+    buttons: {
+      'Proceed to checkout →': '결제하기 →',
+      'Continue shopping': '쇼핑 계속하기',
+      'Remove': '삭제',
+      'Shop the collection': '컬렉션 쇼핑',
+    }
+  },
+  'product.html': {
+    badges: {
+      'Add to cart': '장바구니 담기',
+      'Save for later': '나중에 보기',
+      '← Back to collection': '← 컬렉션으로',
+      'View all →': '전체 보기 →',
+      'View piece': '보기',
+      'You might also want these.': '이것도 마음에 드실 거예요.',
+    }
+  }
+};
+
+function applyPageTranslations(isKo) {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const dict = PAGE_TRANSLATIONS[page];
+  if (!dict) return;
+
+  if (dict.eyebrows) {
+    document.querySelectorAll('.section-eyebrow, .page-eyebrow, .hero-eyebrow, .drop-label, .scene-eyebrow, .card-cat, .insp-label, .trait-num').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = isKo ? (dict.eyebrows[orig] || orig) : orig;
+    });
+  }
+
+  if (dict.titles) {
+    document.querySelectorAll('.section-title, .hero-title, .drop-title, .scene-title, .trait-title, .cart-title, .summary-title, .product-name, .product-cat, .empty-title').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.titles[orig]) el.textContent = isKo ? dict.titles[orig] : orig;
+    });
+  }
+
+  if (dict.buttons) {
+    document.querySelectorAll('button, .btn-add, .btn-back, .btn-wishlist, .related-link, .load-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.buttons[orig]) el.textContent = isKo ? dict.buttons[orig] : orig;
+    });
+  }
+
+  if (dict.badges) {
+    document.querySelectorAll('.badge, .card-action, .overlay-text, .p-overlay-text, .stock-text, .filter-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.badges[orig]) el.textContent = isKo ? dict.badges[orig] : orig;
+    });
+  }
+
+  // Filter buttons KO labels
+  if (isKo && page === 'collection.html') {
+    const filterMap = {'All':'전체','Rings':'반지','Necklaces':'목걸이','Bracelets':'팔찌','Earrings':'귀걸이'};
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const orig = btn.dataset.en || btn.textContent.trim();
+      if (!btn.dataset.en) btn.dataset.en = orig;
+      btn.textContent = filterMap[orig] || orig;
+    });
+    // card categories
+    document.querySelectorAll('.card-cat, .p-cat').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = filterMap[orig] || orig;
+    });
+  } else if (!isKo && page === 'collection.html') {
+    document.querySelectorAll('.filter-btn, .card-cat, .p-cat').forEach(el => {
+      if (el.dataset.en) el.textContent = el.dataset.en;
+    });
+  }
+}
+
+// Extend setLang to also apply page translations
+const _origSetLang = typeof setLang === 'function' ? setLang : null;
+function setLang(lang) {
+  const isKo = lang === 'ko';
+  localStorage.setItem('ds26lang', lang);
+  document.body.classList.toggle('ko-mode', isKo);
+  document.documentElement.lang = lang;
+
+  // Toggle t-en/t-ko if they exist on this page
+  document.querySelectorAll('.t-en').forEach(el => el.style.display = isKo ? 'none' : '');
+  document.querySelectorAll('.t-ko').forEach(el => el.style.display = isKo ? '' : 'none');
+
+  // Toggle buttons
+  const be = document.getElementById('btn-en'), bk = document.getElementById('btn-ko');
+  if (be) be.classList.toggle('active', !isKo);
+  if (bk) bk.classList.toggle('active', isKo);
+
+  // Nav link labels
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const k = isKo ? a.dataset.ko : a.dataset.en;
+    if (k) a.textContent = k;
+  });
+
+  // Apply page-specific translations
+  applyPageTranslations(isKo);
+
+  document.title = isKo ? 'DalgiStälle26 · 실버 주얼리' : 'DalgiStälle26';
+}
+
+// Init
+(function(){
+  const l = localStorage.getItem('ds26lang') || 'en';
+  if (l === 'ko') setLang('ko');
+})();
+</script>
+</body>
+</html>

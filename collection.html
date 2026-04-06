@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Collection — DalgiStälle26</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blush:#FAE8EC;--rose:#C97B8A;--rg:#B76E79;--cw:#FDFAF9;--deep:#1A1114;--pm:#EDB8C4;--pl:#F9D8E0;--p2:#F0D5DC;--p3:#EDD5DA;}
+html{scroll-behavior:smooth}
+body{background:var(--cw);color:var(--deep);font-family:'Montserrat',sans-serif;font-weight:300;cursor:none;overflow-x:hidden;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--rg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(253,250,249,.92);backdrop-filter:blur(14px);border-bottom:.5px solid rgba(183,110,121,.15);}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:1.7rem;color:var(--rg);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);text-decoration:none;opacity:.5;transition:opacity .2s,color .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--rg)}
+.marquee-wrap{background:var(--deep);padding:9px 0;overflow:hidden;margin-top:56px;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 26s linear infinite;}
+.marquee-track span{font-size:10px;font-weight:200;letter-spacing:.22em;color:var(--pl);padding:0 2rem;text-transform:uppercase;}
+.marquee-track span.dot{color:var(--rg)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.page-hero{background:var(--deep);padding:5rem 6rem 4rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem;}
+.page-eyebrow{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--rg);margin-bottom:1rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,7vw,84px);font-weight:300;color:var(--pl);line-height:.95;}
+.page-title em{font-style:italic;color:var(--rg);}
+.page-hero-sub{font-size:11px;letter-spacing:.08em;line-height:1.9;color:rgba(249,216,224,.45);max-width:280px;text-align:right;}
+.drop-pill{display:inline-block;border:.5px solid var(--rg);padding:.45rem 1.2rem;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rg);margin-top:1rem;}
+.filter-wrap{background:var(--cw);padding:2rem 6rem;border-bottom:.5px solid rgba(183,110,121,.12);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:sticky;top:56px;z-index:50;}
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;}
+.filter-btn{background:transparent;border:.5px solid rgba(183,110,121,.3);padding:.5rem 1.4rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(26,17,20,.5);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--rg);color:var(--rg);}
+.filter-btn.active{background:var(--deep);border-color:var(--deep);color:var(--pl);}
+.filter-count{font-size:9px;letter-spacing:.15em;color:rgba(26,17,20,.35);}
+.collection-wrap{padding:3rem 6rem 6rem;background:var(--cw);}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem;}
+.card{display:flex;flex-direction:column;cursor:pointer;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.card.visible{opacity:1;transform:translateY(0)}
+.card-img{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--blush);display:flex;align-items:center;justify-content:center;}
+.card-img.alt1{background:var(--p2);}.card-img.alt2{background:var(--p3);}.card-img.alt3{background:var(--pm);}.card-img.dark{background:var(--deep);}
+.card-placeholder{font-family:'Pinyon Script',cursive;font-size:clamp(48px,8vw,80px);color:rgba(183,110,121,.18);user-select:none;pointer-events:none;}
+.card-img.dark .card-placeholder{color:rgba(249,216,224,.12);}
+.card-overlay{position:absolute;inset:0;background:rgba(183,110,121,.1);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.card:hover .card-overlay{opacity:1;}
+.overlay-text{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--deep);border-bottom:.5px solid var(--rg);padding-bottom:3px;}
+.card-img.dark .overlay-text{color:var(--pl);}
+.badge{position:absolute;top:.8rem;left:.8rem;font-size:7px;letter-spacing:.2em;text-transform:uppercase;padding:3px 9px;}
+.badge.sold{background:var(--deep);color:var(--pl);}.badge.last{background:var(--rg);color:var(--pl);}.badge.new{background:var(--pl);color:var(--deep);}
+.card-info{padding:.9rem 0 0;}
+.card-cat{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--rg);margin-bottom:.3rem;}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--deep);line-height:1.2;margin-bottom:.3rem;}
+.card-line{font-size:9px;letter-spacing:.08em;color:rgba(26,17,20,.45);margin-bottom:.5rem;}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;}
+.card-price{font-size:10px;letter-spacing:.1em;color:var(--rose);}
+.card-price.sold-out{text-decoration:line-through;opacity:.35;}
+.card-action{font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--rg);border:.5px solid rgba(183,110,121,.4);padding:4px 10px;cursor:pointer;transition:all .2s;background:transparent;font-family:'Montserrat',sans-serif;}
+.card-action:hover{background:var(--rg);color:var(--pl);}
+.card-action.disabled{opacity:.3;pointer-events:none;}
+.load-wrap{text-align:center;padding:3rem 0 5rem;}
+.load-btn{background:transparent;border:.5px solid var(--deep);padding:.9rem 3rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--deep);cursor:pointer;transition:all .25s;}
+.load-btn:hover{background:var(--deep);color:var(--pl);}
+footer{background:var(--deep);border-top:.5px solid rgba(183,110,121,.2);padding:3rem 6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo{font-family:'Pinyon Script',cursive;font-size:1.8rem;color:var(--rg);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(249,216,224,.4);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--rg)}
+.footer-copy{font-size:9px;color:rgba(249,216,224,.2);}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}.page-hero,.filter-wrap,.collection-wrap,footer{padding-left:2rem;padding-right:2rem;}}
+@media(max-width:500px){.grid{grid-template-columns:minmax(0,1fr);}}
+.nav-right{display:flex;align-items:center;gap:2rem;}.nav-cart{position:relative;cursor:none;background:none;border:none;padding:4px;display:flex;align-items:center;}.nav-cart svg{width:20px;height:20px;stroke:var(--deep);stroke-width:1.5;fill:none;opacity:.7;transition:opacity .2s,stroke .2s;}.nav-cart:hover svg{opacity:1;stroke:var(--rg,var(--rosegold,#B76E79));}.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--rg,var(--rosegold,#B76E79));color:var(--pl,var(--pink-light,#F9D8E0));font-size:8px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}.cart-badge.show{opacity:1;}
+.lang-toggle{display:flex;align-items:center;border:.5px solid rgba(183,110,121,.3);overflow:hidden;}
+.lang-btn{background:none;border:none;padding:.3rem .7rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--deep);color:var(--pl);}
+
+.tab-switcher{display:flex;border:.5px solid rgba(183,110,121,.3);overflow:hidden;margin-right:1rem;}
+.tab-btn{background:none;border:none;padding:.5rem 1.8rem;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;border-right:.5px solid rgba(183,110,121,.2);}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{background:var(--deep);color:var(--pl);}
+.tab-btn.active#tab-drop{background:var(--rg);color:var(--pl);}
+/* Drop tab header */
+.drop-tab-header{display:none;background:var(--deep);padding:1.5rem 6rem;border-bottom:.5px solid rgba(183,110,121,.15);}
+.drop-tab-header.show{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.drop-tab-countdown{display:flex;gap:1.2rem;align-items:center;}
+.dtc-item{display:flex;flex-direction:column;align-items:center;}
+.dtc-num{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--pl);line-height:1;}
+.dtc-label{font-size:7px;letter-spacing:.25em;text-transform:uppercase;color:var(--rg);}
+.dtc-sep{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(183,110,121,.3);align-self:flex-start;margin-top:3px;}
+.drop-tab-info{font-size:9px;letter-spacing:.15em;color:rgba(249,216,224,.5);}
+.drop-tab-info strong{color:var(--rg);}
+/* Signature tab header */
+.sig-tab-header{display:none;background:var(--blush);padding:1.5rem 6rem;border-bottom:.5px solid rgba(183,110,121,.15);}
+.sig-tab-header.show{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.sig-tab-desc{font-size:10px;line-height:1.8;letter-spacing:.05em;color:rgba(26,17,20,.55);max-width:500px;}
+.sig-tab-desc.ko{font-family:'Noto Serif KR',serif;}
+.sig-tab-badge{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rg);border:.5px solid rgba(183,110,121,.4);padding:.4rem 1rem;}
+/* Drop card urgency ring */
+.card[data-type='drop'] .card-img::after{content:'';position:absolute;inset:0;border:2px solid rgba(183,110,121,0);transition:border-color .3s;}
+.card[data-type='drop']:hover .card-img::after{border-color:var(--rg);}
+/* Signature card subtle mark */
+.sig-mark{position:absolute;bottom:.8rem;left:.8rem;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:var(--rg);opacity:.7;}
+
+.tab-row{display:flex;gap:0;margin-bottom:1rem;border-bottom:.5px solid rgba(183,110,121,.15);}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;padding:.6rem 2rem;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(26,17,20,.4);cursor:pointer;transition:all .2s;margin-bottom:-1px;}
+.tab-btn.active{color:var(--rg,#B76E79);border-bottom-color:var(--rg,#B76E79);}
+.tab-btn:hover{color:var(--rg,#B76E79);}
+.tab-desc{padding:1.5rem 0 .5rem;font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,22px);font-weight:300;color:var(--deep,#1A1114);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;}
+.tab-desc.visible{opacity:1;transform:translateY(0);}
+.tab-desc em{font-style:italic;color:var(--rg,#B76E79);}
+.tab-desc.ko{font-family:'Noto Serif KR',serif;font-size:clamp(12px,1.6vw,18px);}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<nav>
+  <a class="nav-logo" href="index.html" data-en="Home" data-ko="홈">DalgiStälle26</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ko="홈">Home</a>
+      <a href="collection.html" data-en="Collection" data-ko="컬렉션" class="active">Collection</a>
+      <a href="about.html" data-en="About Dalgi" data-ko="달기 소개">About Dalgi</a>
+      <a href="story.html" data-en="Our Story" data-ko="브랜드 스토리">Our Story</a>
+      <a href="drop.html" data-en="Drop" data-ko="드롭">Drop</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+    <button class="nav-cart" onclick="window.location.href='cart.html'" title="View cart">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="nav-badge">0</span>
+    </button>
+  </div>
+</nav>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Silver for the girl who knows</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span><span>No restock. No apologies.</span><span class="dot">✦</span>
+    <span>DalgiStälle26</span><span class="dot">✦</span><span>Silver for the girl who knows</span><span class="dot">✦</span><span>Limited to 26</span><span class="dot">✦</span><span>No restock. No apologies.</span><span class="dot">✦</span>
+  </div>
+</div>
+<div class="page-hero">
+  <div><p class="page-eyebrow">The Collection · Drop 01</p><h1 class="page-title">Wear it like<br>you <em>own</em><br>the room.</h1></div>
+  <div style="text-align:right"><p class="page-hero-sub">Each piece is limited to 26. Once they're gone, they're gone. No restock. No exceptions.</p><div class="drop-pill">26 pieces per drop</div></div>
+</div>
+<div class="filter-wrap">
+  <!-- Tab switcher -->
+  <div class="tab-switcher">
+    <button class="tab-btn active" id="tab-drop" onclick="switchTab('drop')">
+      <span class="t-en">✦ Drop</span><span class="t-ko" style="display:none">✦ 드롭</span>
+    </button>
+    <button class="tab-btn" id="tab-sig" onclick="switchTab('signature')">
+      <span class="t-en">Signature</span><span class="t-ko" style="display:none">시그니처</span>
+    </button>
+  </div>
+  <!-- Category filters -->
+  <div class="filters" id="cat-filters">
+    <button class="filter-btn active" data-cat="all"><span class="t-en">All</span><span class="t-ko" style="display:none">전체</span></button>
+    <button class="filter-btn" data-cat="rings"><span class="t-en">Rings</span><span class="t-ko" style="display:none">반지</span></button>
+    <button class="filter-btn" data-cat="necklaces"><span class="t-en">Necklaces</span><span class="t-ko" style="display:none">목걸이</span></button>
+    <button class="filter-btn" data-cat="bracelets"><span class="t-en">Bracelets</span><span class="t-ko" style="display:none">팔찌</span></button>
+    <button class="filter-btn" data-cat="earrings"><span class="t-en">Earrings</span><span class="t-ko" style="display:none">귀걸이</span></button>
+  </div>
+  <span class="filter-count" id="count">12 pieces</span>
+</div>
+<div class="collection-wrap">
+<div class="drop-tab-header show" id="drop-tab-header">
+  <div>
+    <p style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--rg);margin-bottom:.3rem;" class="t-en">Drop 01 — Ice Queen Collection · Live Now</p>
+    <p style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--rg);margin-bottom:.3rem;" class="t-ko" style="display:none">드롭 01 — 아이스 퀸 컬렉션 · 진행 중</p>
+    <p class="drop-tab-info t-en">Limited to <strong>26 pieces</strong> · No restock · Sterling silver 925</p>
+    <p class="drop-tab-info t-ko" style="display:none"><strong>26개</strong> 한정 · 재입고 없음 · 925 스털링 실버</p>
+  </div>
+  <div class="drop-tab-countdown">
+    <div class="dtc-item"><div class="dtc-num" id="ctd">00</div><div class="dtc-label t-en">Days</div><div class="dtc-label t-ko" style="display:none">일</div></div>
+    <div class="dtc-sep">·</div>
+    <div class="dtc-item"><div class="dtc-num" id="cth">00</div><div class="dtc-label t-en">Hrs</div><div class="dtc-label t-ko" style="display:none">시간</div></div>
+    <div class="dtc-sep">·</div>
+    <div class="dtc-item"><div class="dtc-num" id="ctm">00</div><div class="dtc-label t-en">Min</div><div class="dtc-label t-ko" style="display:none">분</div></div>
+    <div class="dtc-sep">·</div>
+    <div class="dtc-item"><div class="dtc-num" id="cts">00</div><div class="dtc-label t-en">Sec</div><div class="dtc-label t-ko" style="display:none">초</div></div>
+  </div>
+</div>
+<div class="sig-tab-header" id="sig-tab-header">
+  <div>
+    <p style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--rg);margin-bottom:.4rem;" class="t-en">DalgiStälle26 代表作 · Signature Series</p>
+    <p style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--rg);margin-bottom:.4rem;" class="t-ko" style="display:none">DalgiStälle26 대표작 · 시그니처 시리즈</p>
+    <p class="sig-tab-desc t-en">The classics. Always available. No countdown, no urgency — just the pieces that define the brand.</p>
+    <p class="sig-tab-desc ko t-ko" style="display:none">클래식. 항상 구매 가능. 카운트다운도, 긴급함도 없습니다 — 브랜드를 정의하는 피스들.</p>
+  </div>
+  <div class="sig-tab-badge t-en">Always available · 대표작</div>
+  <div class="sig-tab-badge t-ko" style="display:none">항상 구매 가능 · 代表作</div>
+</div>
+
+  
+  <!-- TAB DESCRIPTIONS -->
+  <div id="desc-drop" class="tab-desc visible">
+    <span class="t-en"><em>Limited drops.</em> 26 pieces. No restock. Once gone, gone forever.</span>
+    <span class="t-ko" style="display:none"><em>한정 드롭.</em> 26개. 재입고 없음. 사라지면 영원히 사라집니다.</span>
+  </div>
+  <div id="desc-signature" class="tab-desc" style="display:none">
+    <span class="t-en">The <em>Signature 代表作</em> — Dalgi's classics. Always available. Always sterling silver.</span>
+    <span class="t-ko" style="display:none"><em>시그니처 代表作</em> — 달기의 클래식. 항상 구매 가능. 언제나 스털링 실버.</span>
+  </div>
+
+<div class="grid" id="grid">
+    <div class="card" data-cat="rings" data-type="drop"><div class="card-img dark"><div class="card-placeholder">◈</div><div class="card-overlay" onclick="window.location.href='product.html?p=Ice+Queen+Ring'"><span class="overlay-text">View piece</span></div><span class="badge last">2 left</span></div><div class="card-info"><p class="card-cat">Rings</p><p class="card-name" onclick="window.location.href='product.html?p=Ice+Queen+Ring'" style="cursor:pointer;">Ice Queen Ring</p><p class="card-line">Dalgi approved · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 68,000</span><button class="card-action" onclick="addToCart('Ice Queen Ring','Rings',68000,'dark')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="rings" data-type="drop"><div class="card-img alt1"><div class="card-placeholder">◇</div><div class="card-overlay" onclick="window.location.href='product.html?p=Pink+Throne+Ring'"><span class="overlay-text">View piece</span></div><span class="badge new">New</span></div><div class="card-info"><p class="card-cat">Rings</p><p class="card-name" onclick="window.location.href='product.html?p=Pink+Throne+Ring'" style="cursor:pointer;">Pink Throne Ring</p><p class="card-line">Cold girl luxury · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 72,000</span><button class="card-action" onclick="addToCart('Pink Throne Ring','Rings',72000,'alt1')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="rings" data-type="drop"><div class="card-img alt2"><div class="card-placeholder">◉</div><div class="card-overlay" onclick="window.location.href='product.html?p=Upper+East+Ring'"><span class="overlay-text">View piece</span></div><span class="badge sold">Sold out</span></div><div class="card-info"><p class="card-cat">Rings</p><p class="card-name" onclick="window.location.href='product.html?p=Upper+East+Ring'" style="cursor:pointer;">Upper East Ring</p><p class="card-line">Archive piece · Sterling silver</p><div class="card-bottom"><span class="card-price sold-out">₩ 65,000</span><button class="card-action disabled">Sold out</button></div></div></div>
+    <div class="card" data-cat="necklaces" data-type="drop"><div class="card-img"><div class="card-placeholder">◈</div><div class="card-overlay" onclick="window.location.href='product.html?p=First+Kiss+Necklace'"><span class="overlay-text">View piece</span></div><span class="badge last">5 left</span></div><div class="card-info"><p class="card-cat">Necklaces</p><p class="card-name" onclick="window.location.href='product.html?p=First+Kiss+Necklace'" style="cursor:pointer;">First Kiss Necklace</p><p class="card-line">She wanted it · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 88,000</span><button class="card-action" onclick="addToCart('Upper East Ring','Rings',65000,'alt2')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="necklaces" data-type="drop"><div class="card-img dark"><div class="card-placeholder">◇</div><div class="card-overlay" onclick="window.location.href='product.html?p=Cold+Girl+Chain'"><span class="overlay-text">View piece</span></div><span class="badge new">New</span></div><div class="card-info"><p class="card-cat">Necklaces</p><p class="card-name" onclick="window.location.href='product.html?p=Cold+Girl+Chain'" style="cursor:pointer;">Cold Girl Chain</p><p class="card-line">Dalgi approved · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 92,000</span><button class="card-action" onclick="addToCart('First Kiss Necklace','Necklaces',88000,'')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="necklaces" data-type="drop"><div class="card-img alt3"><div class="card-placeholder">◉</div><div class="card-overlay" onclick="window.location.href='product.html?p=Strawberry+Drop+Pendant'"><span class="overlay-text">View piece</span></div></div><div class="card-info"><p class="card-cat">Necklaces</p><p class="card-name" onclick="window.location.href='product.html?p=Strawberry+Drop+Pendant'" style="cursor:pointer;">Strawberry Drop Pendant</p><p class="card-line">Limited drop · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 96,000</span><button class="card-action" onclick="addToCart('Cold Girl Chain','Necklaces',92000,'dark')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="bracelets" data-type="drop"><div class="card-img alt1"><div class="card-placeholder">◈</div><div class="card-overlay" onclick="window.location.href='product.html?p=Pink+Throne+Bracelet'"><span class="overlay-text">View piece</span></div><span class="badge last">3 left</span></div><div class="card-info"><p class="card-cat">Bracelets</p><p class="card-name" onclick="window.location.href='product.html?p=Pink+Throne+Bracelet'" style="cursor:pointer;">Pink Throne Bracelet</p><p class="card-line">Cold girl luxury · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 72,000</span><button class="card-action" onclick="addToCart('Strawberry Drop Pendant','Necklaces',96000,'alt3')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="bracelets" data-type="drop"><div class="card-img"><div class="card-placeholder">◇</div><div class="card-overlay" onclick="window.location.href='product.html?p=Serena+Cuff'"><span class="overlay-text">View piece</span></div><span class="badge new">New</span></div><div class="card-info"><p class="card-cat">Bracelets</p><p class="card-name" onclick="window.location.href='product.html?p=Serena+Cuff'" style="cursor:pointer;">Serena Cuff</p><p class="card-line">Upper east side · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 84,000</span><button class="card-action" onclick="addToCart('Pink Throne Bracelet','Bracelets',72000,'alt1')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="bracelets" data-type="drop"><div class="card-img alt2"><div class="card-placeholder">◉</div><div class="card-overlay" onclick="window.location.href='product.html?p=Crown+Stack+Bracelet'"><span class="overlay-text">View piece</span></div><span class="badge sold">Sold out</span></div><div class="card-info"><p class="card-cat">Bracelets</p><p class="card-name" onclick="window.location.href='product.html?p=Crown+Stack+Bracelet'" style="cursor:pointer;">Crown Stack Bracelet</p><p class="card-line">Archive piece · Sterling silver</p><div class="card-bottom"><span class="card-price sold-out">₩ 78,000</span><button class="card-action disabled">Sold out</button></div></div></div>
+    <div class="card" data-cat="earrings" data-type="drop"><div class="card-img dark"><div class="card-placeholder">◈</div><div class="card-overlay" onclick="window.location.href='product.html?p=Upper+East+Earrings'"><span class="overlay-text">View piece</span></div><span class="badge sold">Sold out</span></div><div class="card-info"><p class="card-cat">Earrings</p><p class="card-name" onclick="window.location.href='product.html?p=Upper+East+Earrings'" style="cursor:pointer;">Upper East Earrings</p><p class="card-line">Archive piece · Sterling silver</p><div class="card-bottom"><span class="card-price sold-out">₩ 55,000</span><button class="card-action disabled">Sold out</button></div></div></div>
+    <div class="card" data-cat="earrings" data-type="drop"><div class="card-img alt3"><div class="card-placeholder">◇</div><div class="card-overlay" onclick="window.location.href='product.html?p=Regina+Hoops'"><span class="overlay-text">View piece</span></div><span class="badge new">New</span></div><div class="card-info"><p class="card-cat">Earrings</p><p class="card-name" onclick="window.location.href='product.html?p=Regina+Hoops'" style="cursor:pointer;">Regina Hoops</p><p class="card-line">She has it · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 62,000</span><button class="card-action" onclick="addToCart('Serena Cuff','Bracelets',84000,'')">Add to cart</button></div></div></div>
+    <div class="card" data-cat="earrings" data-type="drop"><div class="card-img alt1"><div class="card-placeholder">◉</div><div class="card-overlay" onclick="window.location.href='product.html?p=Strawberry+Studs'"><span class="overlay-text">View piece</span></div><span class="badge last">4 left</span></div><div class="card-info"><p class="card-cat">Earrings</p><p class="card-name" onclick="window.location.href='product.html?p=Strawberry+Studs'" style="cursor:pointer;">Strawberry Studs</p><p class="card-line">달기 · Sterling silver</p><div class="card-bottom"><span class="card-price">₩ 58,000</span><button class="card-action" onclick="addToCart('Crown Stack Bracelet','Bracelets',78000,'alt2')">Add to cart</button></div></div></div>
+  </div>
+  <div class="load-wrap"><button class="load-btn">Load more pieces</button></div>
+</div>
+<footer>
+  <div class="footer-logo">DalgiStälle26</div>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">小红书</a><a href="#">About Dalgi</a><a href="#">Contact</a></div>
+  <p class="footer-copy">© 2026 DalgiStälle26. All rights reserved.</p>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,button,.card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cur.style.background='var(--pl)';ring.style.width='48px';ring.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cur.style.background='var(--rg)';ring.style.width='32px';ring.style.height='32px'});
+});
+const cards=document.querySelectorAll('.card');
+const countEl=document.getElementById('count');
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    let shown=0;
+    cards.forEach(card=>{
+      const match=cat==='all'||card.dataset.cat===cat;
+      card.style.display=match?'flex':'none';
+      if(match){shown++;card.style.transitionDelay=(shown*0.05)+'s';setTimeout(()=>card.classList.add('visible'),50);}
+      else{card.classList.remove('visible');card.style.transitionDelay='0s';}
+    });
+    countEl.textContent=shown+' piece'+(shown!==1?'s':'');
+  });
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),e.target.dataset.i*80);});},{threshold:0.1});
+cards.forEach((c,i)=>{c.dataset.i=i;obs.observe(c);});
+
+const _cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+const _badge=document.getElementById('nav-badge');
+if(_badge&&_cart.length>0){_badge.textContent=_cart.length;_badge.classList.add('show');}
+
+function addToCart(name, cat, price, imgClass){
+  const cart = JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  if(!cart.find(i=>i.name===name)){
+    cart.push({name, cat, price, imgClass, id:Date.now()});
+    localStorage.setItem('ds26cart', JSON.stringify(cart));
+  }
+  const badge = document.getElementById('nav-badge');
+  if(badge){ badge.textContent=cart.length; badge.classList.add('show'); }
+  // flash button feedback
+  event.target.textContent='Added ✦';
+  event.target.style.background='var(--rg)';
+  event.target.style.color='var(--pl)';
+  setTimeout(()=>{ event.target.textContent='Add to cart'; event.target.style.background=''; event.target.style.color=''; }, 1200);
+}
+
+(function(){
+  var cart=JSON.parse(localStorage.getItem('ds26cart')||'[]');
+  var badge=document.getElementById('nav-badge');
+  if(badge&&cart.length>0){badge.textContent=cart.length;badge.classList.add('show');}
+})();
+
+// ── LIVE IMWEB PRODUCT SYNC ──
+const VERCEL_URL = 'https://dalgi26-backend-lruf.vercel.app';
+async function loadLiveProducts() {
+  const key = localStorage.getItem('ds26_imweb_key');
+  if (!key) return; // no key = use hardcoded fallback
+  try {
+    const res = await fetch(VERCEL_URL + '/api/imweb?path=product', {
+      headers: { 'x-imweb-key': key }
+    });
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    const products = data.list || data.data || [];
+    if (!products.length) return;
+    const grid = document.getElementById('grid');
+    const countEl = document.getElementById('count');
+    if (!grid) return;
+    grid.innerHTML = '';
+    products.forEach((p, i) => {
+      const inStock = p.stock > 0;
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.cat = (p.category_name || 'collection').toLowerCase();
+      card.innerHTML = `
+        <div class="card-img ${i%4===1?'dark':i%4===2?'alt1':i%4===3?'alt2':'alt3'}"
+          onclick="window.location.href='product.html?p=${encodeURIComponent(p.name)}'">
+          ${p.thumbnail ? `<img src="${p.thumbnail}" style="width:100%;height:100%;object-fit:cover"/>` : '<div class="card-placeholder">◈</div>'}
+          <div class="card-overlay"><span class="overlay-text">View piece</span></div>
+          ${p.stock <= 5 && p.stock > 0 ? `<span class="badge last">${p.stock} left</span>` : ''}
+          ${!inStock ? '<span class="badge sold">Sold out</span>' : ''}
+        </div>
+        <div class="card-info">
+          <p class="card-cat">${p.category_name || 'Collection'}</p>
+          <p class="card-name" onclick="window.location.href='product.html?p=${encodeURIComponent(p.name)}'" style="cursor:pointer">${p.name}</p>
+          <p class="card-line">Sterling silver 925</p>
+          <div class="card-bottom">
+            <span class="card-price ${!inStock?'sold-out':''}">₩ ${Number(p.price).toLocaleString()}</span>
+            <button class="card-action ${!inStock?'disabled':''}"
+              onclick="${inStock?`addToCart('${p.name}','${p.category_name||'Collection'}',${p.price},'')`:''}"
+            >${inStock?'Add to cart':'Sold out'}</button>
+          </div>
+        </div>`;
+      setTimeout(()=>card.classList.add('visible'), i*60);
+      grid.appendChild(card);
+    });
+    if (countEl) countEl.textContent = products.length + ' pieces';
+    console.log('✅ Loaded ' + products.length + ' live products from imweb');
+  } catch(e) {
+    console.warn('⚠️ Live products failed, using fallback:', e.message);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadLiveProducts);
+
+// ── UNIVERSAL LANGUAGE SWITCHER ──
+const PAGE_TRANSLATIONS = {
+  'about.html': {
+    eyebrows: {
+      'The Mascot · The Muse · The Standard': '마스코트 · 뮤즈 · 기준',
+      'Who She Is': '그녀는 누구인가',
+      'Her Philosophy': '그녀의 철학',
+      'Her DNA': '그녀의 DNA',
+      'Her World': '그녀의 세계',
+      'Her Ritual': '그녀의 의식',
+      'Her Energy': '그녀의 에너지',
+      'Her Many Moods': '그녀의 다양한 감정',
+      'Her Boundaries': '그녀의 경계',
+      'The Mascot': '마스코트',
+    },
+    titles: {
+      'Three sides of the same crown.': '같은 왕관의 세 면.',
+      'Part Regina.': '레지나 반.',
+      'Part Serena.': '세레나 반.',
+      'Entirely herself.': '오롯이 그녀 자신.',
+      'Meet all of Dalgi.': '달기의 모든 면을 만나세요.',
+      'Where Dalgi comes from.': '달기가 온 곳.',
+      'Want it.': '원해.',
+      'Believe it.': '믿어.',
+      'Have it.': '가져.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'collection.html': {
+    eyebrows: {
+      'The Collection · Drop 01': '컬렉션 · 드롭 01',
+      'All': '전체',
+    },
+    titles: {
+      'Wear it like you own the room.': '공간을 지배하듯 착용하세요.',
+      '26 pieces per drop': '드롭당 26개',
+    },
+    badges: {
+      'New': '신상', 'Sold out': '품절', 'left': '개 남음',
+      'Add to cart': '장바구니 담기', 'View piece': '보기',
+    }
+  },
+  'story.html': {
+    eyebrows: {
+      'The Philosophy · The Rules · The Why': '철학 · 규칙 · 이유',
+      'The Philosophy': '철학',
+      'Why Silver': '왜 실버인가',
+      'The Drop Rules': '드롭 규칙',
+    },
+    titles: {
+      'Not a brand. A belief system.': '브랜드가 아닙니다. 신념 체계입니다.',
+      'Three things we will never compromise on.': '절대 타협하지 않는 세 가지.',
+      'Sterling Silver. Nothing Else.': '스털링 실버. 그것뿐.',
+      '26 Pieces. Every Drop.': '매 드롭 26개.',
+      'No Restock. No Exceptions.': '재입고 없음. 예외 없음.',
+      'How every drop works.': '모든 드롭이 작동하는 방식.',
+    },
+    buttons: {
+      'Shop the collection': '컬렉션 쇼핑',
+      'Meet Dalgi': '달기 만나기',
+    }
+  },
+  'cart.html': {
+    eyebrows: { 'Your selection': '선택 항목' },
+    titles: { 'Cart': '장바구니', 'Order Summary': '주문 요약' },
+    buttons: {
+      'Proceed to checkout →': '결제하기 →',
+      'Continue shopping': '쇼핑 계속하기',
+      'Remove': '삭제',
+      'Shop the collection': '컬렉션 쇼핑',
+    }
+  },
+  'product.html': {
+    badges: {
+      'Add to cart': '장바구니 담기',
+      'Save for later': '나중에 보기',
+      '← Back to collection': '← 컬렉션으로',
+      'View all →': '전체 보기 →',
+      'View piece': '보기',
+      'You might also want these.': '이것도 마음에 드실 거예요.',
+    }
+  }
+};
+
+function applyPageTranslations(isKo) {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const dict = PAGE_TRANSLATIONS[page];
+  if (!dict) return;
+
+  if (dict.eyebrows) {
+    document.querySelectorAll('.section-eyebrow, .page-eyebrow, .hero-eyebrow, .drop-label, .scene-eyebrow, .card-cat, .insp-label, .trait-num').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = isKo ? (dict.eyebrows[orig] || orig) : orig;
+    });
+  }
+
+  if (dict.titles) {
+    document.querySelectorAll('.section-title, .hero-title, .drop-title, .scene-title, .trait-title, .cart-title, .summary-title, .product-name, .product-cat, .empty-title').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.titles[orig]) el.textContent = isKo ? dict.titles[orig] : orig;
+    });
+  }
+
+  if (dict.buttons) {
+    document.querySelectorAll('button, .btn-add, .btn-back, .btn-wishlist, .related-link, .load-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.buttons[orig]) el.textContent = isKo ? dict.buttons[orig] : orig;
+    });
+  }
+
+  if (dict.badges) {
+    document.querySelectorAll('.badge, .card-action, .overlay-text, .p-overlay-text, .stock-text, .filter-btn').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      if (dict.badges[orig]) el.textContent = isKo ? dict.badges[orig] : orig;
+    });
+  }
+
+  // Filter buttons KO labels
+  if (isKo && page === 'collection.html') {
+    const filterMap = {'All':'전체','Rings':'반지','Necklaces':'목걸이','Bracelets':'팔찌','Earrings':'귀걸이'};
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const orig = btn.dataset.en || btn.textContent.trim();
+      if (!btn.dataset.en) btn.dataset.en = orig;
+      btn.textContent = filterMap[orig] || orig;
+    });
+    // card categories
+    document.querySelectorAll('.card-cat, .p-cat').forEach(el => {
+      const orig = el.dataset.en || el.textContent.trim();
+      if (!el.dataset.en) el.dataset.en = orig;
+      el.textContent = filterMap[orig] || orig;
+    });
+  } else if (!isKo && page === 'collection.html') {
+    document.querySelectorAll('.filter-btn, .card-cat, .p-cat').forEach(el => {
+      if (el.dataset.en) el.textContent = el.dataset.en;
+    });
+  }
+}
+
+// Extend setLang to also apply page translations
+const _origSetLang = typeof setLang === 'function' ? setLang : null;
+function setLang(lang) {
+  const isKo = lang === 'ko';
+  localStorage.setItem('ds26lang', lang);
+  document.body.classList.toggle('ko-mode', isKo);
+  document.documentElement.lang = lang;
+
+  // Toggle t-en/t-ko if they exist on this page
+  document.querySelectorAll('.t-en').forEach(el => el.style.display = isKo ? 'none' : '');
+  document.querySelectorAll('.t-ko').forEach(el => el.style.display = isKo ? '' : 'none');
+
+  // Toggle buttons
+  const be = document.getElementById('btn-en'), bk = document.getElementById('btn-ko');
+  if (be) be.classList.toggle('active', !isKo);
+  if (bk) bk.classList.toggle('active', isKo);
+
+  // Nav link labels
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const k = isKo ? a.dataset.ko : a.dataset.en;
+    if (k) a.textContent = k;
+  });
+
+  // Apply page-specific translations
+  applyPageTranslations(isKo);
+
+  document.title = isKo ? 'DalgiStälle26 · 실버 주얼리' : 'DalgiStälle26';
+}
+
+// Init
+(function(){
+  const l = localStorage.getItem('ds26lang') || 'en';
+  if (l === 'ko') setLang('ko');
+})();
+
+// TAB SWITCHING
+let currentTab = 'drop';
+
+function switchTab(tab) {
+  currentTab = tab;
+  const isDropTab = tab === 'drop';
+
+  // Toggle tab buttons
+  document.getElementById('tab-drop').classList.toggle('active', isDropTab);
+  document.getElementById('tab-sig').classList.toggle('active', !isDropTab);
+
+  // Toggle headers
+  document.getElementById('drop-tab-header').classList.toggle('show', isDropTab);
+  document.getElementById('sig-tab-header').classList.toggle('show', !isDropTab);
+
+  // Show/hide cards by type
+  const allCards = document.querySelectorAll('.card');
+  let shown = 0;
+  const activeCat = document.querySelector('.filter-btn.active')?.dataset.cat || 'all';
+
+  allCards.forEach((card, i) => {
+    const typeMatch = card.dataset.type === tab;
+    const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+    const show = typeMatch && catMatch;
+    card.style.display = show ? 'flex' : 'none';
+    if(show) {
+      shown++;
+      card.style.transitionDelay = (shown * 0.05) + 's';
+      setTimeout(() => card.classList.add('visible'), 60);
+    } else {
+      card.classList.remove('visible');
+      card.style.transitionDelay = '0s';
+    }
+  });
+
+  const countEl = document.getElementById('count');
+  if(countEl) countEl.textContent = shown + ' piece' + (shown !== 1 ? 's' : '');
+
+  // Update page title area
+  if(!isDropTab) {
+    document.querySelector('.page-title').innerHTML = 'The <em>Signature</em><br>Collection.';
+  } else {
+    document.querySelector('.page-title').innerHTML = 'Wear it like<br>you <em>own</em><br>the room.';
+  }
+
+  // Check if coming from drop.html
+  history.replaceState({}, '', 'collection.html?tab=' + tab);
+}
+
+// Mini countdown in collection drop header
+const ctTarget = new Date(Date.now() + 3*864e5 + 14*36e5 + 22*6e4);
+function ctTick(){
+  const d = ctTarget - Date.now();
+  if(d <= 0) return;
+  const ctd=document.getElementById('ctd'),cth=document.getElementById('cth'),ctm=document.getElementById('ctm'),cts=document.getElementById('cts');
+  if(ctd) ctd.textContent = String(Math.floor(d/864e5)).padStart(2,'0');
+  if(cth) cth.textContent = String(Math.floor(d%864e5/36e5)).padStart(2,'0');
+  if(ctm) ctm.textContent = String(Math.floor(d%36e5/6e4)).padStart(2,'0');
+  if(cts) cts.textContent = String(Math.floor(d%6e4/1e3)).padStart(2,'0');
+}
+ctTick(); setInterval(ctTick, 1000);
+
+// Check URL param on load
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const tab = params.get('tab');
+  if(tab === 'signature') switchTab('signature');
+  else switchTab('drop');
+})();
+
+// TAB SWITCHING — Drop vs Signature
+function switchTab(tab){
+  const isDrop = tab==='drop';
+  const isKo = localStorage.getItem('ds26lang')==='ko';
+
+  // Tab buttons
+  document.getElementById('tab-drop').classList.toggle('active', isDrop);
+  document.getElementById('tab-signature').classList.toggle('active', !isDrop);
+
+  // Descriptions
+  const dd=document.getElementById('desc-drop');
+  const ds=document.getElementById('desc-signature');
+  dd.classList.remove('visible');ds.classList.remove('visible');
+  if(isDrop){dd.style.display='';setTimeout(()=>dd.classList.add('visible'),10);}
+  else{ds.style.display='';setTimeout(()=>ds.classList.add('visible'),10);}
+  if(isDrop){ds.style.display='none';}else{dd.style.display='none';}
+
+  // Show/hide cards by data-type
+  const allCards=document.querySelectorAll('.card');
+  let shown=0;
+  allCards.forEach(card=>{
+    const match=card.dataset.type===tab;
+    card.style.display=match?'flex':'none';
+    if(match){shown++;card.style.transitionDelay=(shown*.06)+'s';setTimeout(()=>card.classList.add('visible'),50);}
+    else{card.classList.remove('visible');card.style.transitionDelay='0s';}
+  });
+
+  const countEl=document.getElementById('count');
+  if(countEl) countEl.textContent=shown+' '+(isKo?(tab==='drop'?'드롭 피스':'시그니처 피스'):(tab==='drop'?'drop pieces':'signature pieces'));
+
+  // Reset category filter
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  const allBtn=document.querySelector('.filter-btn[data-cat="all"]');
+  if(allBtn)allBtn.classList.add('active');
+
+  localStorage.setItem('ds26tab', tab);
+}
+
+// Check URL param for tab
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const tab=params.get('tab')||localStorage.getItem('ds26tab')||'drop';
+  switchTab(tab);
+})();
+</script>
+</body>
+</html>
